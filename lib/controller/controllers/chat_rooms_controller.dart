@@ -4,7 +4,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:psychology/model/chat_room_model.dart';
-import 'package:psychology/model/doctor_info_model.dart';
 import 'package:psychology/model/patint_info_model.dart';
 import 'package:psychology/services/firestore_methods.dart';
 import 'package:psychology/utils/my_string.dart';

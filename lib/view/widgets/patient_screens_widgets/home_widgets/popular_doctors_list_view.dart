@@ -16,7 +16,7 @@ class PopularDoctorsListView extends StatelessWidget {
     return Obx(
       () {
         return Padding(
-          padding: const EdgeInsets.all(2.0),
+          padding: const EdgeInsets.symmetric(horizontal: 10),
           child: Column(
             children: [
               controller.doctorsList.isNotEmpty
@@ -29,7 +29,7 @@ class PopularDoctorsListView extends StatelessWidget {
                         children: [
                           KTextUtils(
                               text: "Popular Doctors",
-                              size: SizeConfig.defaultSize! * 1.05,
+                              size: SizeConfig.defaultSize! * 0.9,
                               color: black,
                               fontWeight: FontWeight.w800,
                               textDecoration: TextDecoration.none),
@@ -47,7 +47,7 @@ class PopularDoctorsListView extends StatelessWidget {
                     )
                   : SizedBox(),
               SizedBox(
-                height: 5,
+                height: 10,
               ),
               Container(
                 width: SizeConfig.screenWidth,

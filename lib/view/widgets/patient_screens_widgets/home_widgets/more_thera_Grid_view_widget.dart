@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:psychology/controller/controllers/patient_controller/patient_home_screen_controller.dart';
@@ -16,46 +15,49 @@ class MoreTherapistsGridViewWidget extends StatelessWidget {
     return Obx(
       () {
         return controller.moreDoctorsList.isNotEmpty
-            ? Column(
-                children: [
-                  Container(
-                    margin: EdgeInsets.symmetric(horizontal: 5),
-                    height: SizeConfig.screenHeight! * 0.04,
-                    width: SizeConfig.screenWidth,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        KTextUtils(
-                            text: "More Therapists",
-                            size: SizeConfig.defaultSize! * 1,
-                            color: black,
-                            fontWeight: FontWeight.w800,
-                            textDecoration: TextDecoration.none),
-                      ],
+            ? Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Column(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.symmetric(horizontal: 5),
+                      height: SizeConfig.screenHeight! * 0.04,
+                      width: SizeConfig.screenWidth,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          KTextUtils(
+                              text: "More Therapists",
+                              size: SizeConfig.defaultSize! * 0.9,
+                              color: black,
+                              fontWeight: FontWeight.w800,
+                              textDecoration: TextDecoration.none),
+                        ],
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  ListView.builder(
-                      padding: EdgeInsets.zero,
-                      physics: BouncingScrollPhysics(),
-                      shrinkWrap: true,
-                      scrollDirection: Axis.vertical,
-                      itemCount: controller.doctorsList.length.toInt(),
-                      // gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                      //     childAspectRatio: 1, maxCrossAxisExtent: 200),
-                      itemBuilder: (context, index) {
-                        return DoctorCard(
-                          imageUrl: controller.doctorsList[index].profileUrl,
-                          name: controller.doctorsList[index].displayName,
-                          description: controller.doctorsList[index].email,
-                          uid: controller.doctorsList[index].uid,
-                          doctorInfo: controller.doctorsList[index],
-                        );
-                      })
-                ],
-              )
+                    SizedBox(
+                      height: 10,
+                    ),
+                    ListView.builder(
+                        padding: EdgeInsets.zero,
+                        physics: BouncingScrollPhysics(),
+                        shrinkWrap: true,
+                        scrollDirection: Axis.vertical,
+                        itemCount: controller.doctorsList.length.toInt(),
+                        // gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                        //     childAspectRatio: 1, maxCrossAxisExtent: 200),
+                        itemBuilder: (context, index) {
+                          return DoctorCard(
+                            imageUrl: controller.doctorsList[index].profileUrl,
+                            name: controller.doctorsList[index].displayName,
+                            description: controller.doctorsList[index].email,
+                            uid: controller.doctorsList[index].uid,
+                            doctorInfo: controller.doctorsList[index],
+                          );
+                        })
+                  ],
+                ),
+            )
             : SizedBox(
                 child: Center(
                   child: KTextUtils(

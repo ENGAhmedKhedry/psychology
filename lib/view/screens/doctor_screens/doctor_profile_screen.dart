@@ -41,6 +41,8 @@ import '../../../controller/controllers/doctor_controller/doctor_main_controller
 import '../../../utils/my_string.dart';
 import '../../widgets/patient_screens_widgets/doctor_profile_view_for_patient_widgets/circule_image_avatar.dart';
 import '../patient_screens/patient_update_profile.dart';
+import 'doctor_complete_profile/dialog.dart';
+import 'doctor_complete_profile/doctor_experience.dart';
 
 class DoctorProfileScreen extends StatelessWidget {
   DoctorProfileScreen({Key? key}) : super(key: key);
@@ -125,6 +127,17 @@ class DoctorProfileScreen extends StatelessWidget {
               icon: Icons.messenger_outline_outlined,
               iconColor: Colors.white,
               label: '  Invite a friend   ',
+              style: TextStyle(fontSize: 20, color: Colors.black),
+            ),
+            const SizedBox(height: 20),
+            buildTextButtonIcon(
+              backColor: mainColor,
+              onPressed: () {
+                Get.to(() => DoctorDialog());
+              },
+              icon: Icons.info_outline_rounded,
+              iconColor: Colors.white,
+              label: '  Complete Your Profile   ',
               style: TextStyle(fontSize: 20, color: Colors.black),
             ),
             const SizedBox(height: 20),

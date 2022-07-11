@@ -1,14 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:psychology/controller/controllers/doctor_controller/doctor_home_controller.dart';
 import 'package:psychology/utils/constants.dart';
 import 'package:psychology/view/widgets/auth/auth_button.dart';
-import 'package:psychology/view/widgets/auth/auth_text_from_field.dart';
 import 'package:psychology/view/widgets/utils_widgets/height_size_box.dart';
 import 'package:psychology/view/widgets/utils_widgets/text_utils.dart';
-
-import '../../../utils/my_string.dart';
 import '../../../utils/size_config.dart';
 
 class AddAppointmentScreen extends StatelessWidget {
@@ -279,11 +275,11 @@ class AddAppointmentScreen extends StatelessWidget {
                               ))
                           : KTextUtils(
                               text: "ADD",
-                              size: Get.width * .1,
+                              size: Get.width * .06,
                               color: mainColor2,
                               fontWeight: FontWeight.bold,
                               textDecoration: TextDecoration.none),
-                      width: Get.width * .7),
+                      width: Get.width * .45),
                   HeightSizeBox(Get.height * .1),
                 ],
               ),

@@ -5,7 +5,6 @@ import 'package:psychology/controller/controllers/patient_controller/main_patien
 import 'package:psychology/utils/constants.dart';
 import 'package:psychology/utils/size_config.dart';
 import 'package:psychology/utils/styles.dart';
-import 'package:psychology/view/screens/call_screens/answer_call/answer_call_wrap_layout.dart';
 
 class PatientMainScreen extends StatelessWidget {
   PatientMainScreen({Key? key}) : super(key: key);

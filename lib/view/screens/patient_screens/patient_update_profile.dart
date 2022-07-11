@@ -7,10 +7,10 @@ import 'package:psychology/view/widgets/auth/auth_text_from_field.dart';
 import 'package:psychology/view/widgets/utils_widgets/height_size_box.dart';
 
 import '../../../controller/controllers/auth_controller.dart';
- import '../../../model/patint_info_model.dart';
+import '../../../model/patint_info_model.dart';
 import '../../../utils/constants.dart';
 import '../../../utils/my_string.dart';
- import '../../widgets/patient_screens_widgets/doctor_profile_view_for_patient_widgets/circule_image_avatar.dart';
+import '../../widgets/patient_screens_widgets/doctor_profile_view_for_patient_widgets/circule_image_avatar.dart';
 
 class PatientUpdateProfile extends StatelessWidget {
   PatientUpdateProfile({Key? key}) : super(key: key);
@@ -97,7 +97,7 @@ class PatientUpdateProfile extends StatelessWidget {
                             width: SizeConfig.width! * .28,
                             imageUrl: data.profileUrl!,
                             color: Colors.white,
-                           ),
+                          ),
                           Positioned(
                             bottom: 0,
                             right: 0,
@@ -196,17 +196,16 @@ class PatientUpdateProfile extends StatelessWidget {
 
                                   controller
                                       .updateUserImageStorage(
-                                        data.uid!,
-                                        data.profileUrl!,
-                                        nameController.text,
-                                        phoneController.text,
-                                        emailController.text,
-                                        Get.arguments[1],
-                                     context )
-                                      .then((value) {cc.updateUserEmail(
-                                      emailController.text);
-
-                                      });
+                                          data.uid!,
+                                          data.profileUrl!,
+                                          nameController.text,
+                                          phoneController.text,
+                                          emailController.text,
+                                          Get.arguments[1],
+                                          context)
+                                      .then((value) {
+                                    cc.updateUserEmail(emailController.text);
+                                  });
                                 }
                               },
                               text: controller.isLoading == true

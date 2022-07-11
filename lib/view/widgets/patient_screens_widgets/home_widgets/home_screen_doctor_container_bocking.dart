@@ -65,9 +65,9 @@ class HomeScreenDoctorContainerBocking extends StatelessWidget {
                   child: Text(
                     "Dr. $name",
                     style: TextStyle(
-                      fontSize: SizeConfig.defaultSize! * .9,
+                      fontSize: SizeConfig.defaultSize! * .7,
                       color: black,
-                      fontWeight: FontWeight.w900,
+                      fontWeight: FontWeight.w700,
                     ),
                     softWrap: true,
                   ),

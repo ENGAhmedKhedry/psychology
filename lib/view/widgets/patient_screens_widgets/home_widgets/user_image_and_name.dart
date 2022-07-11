@@ -43,8 +43,8 @@ class UserImageAndName extends StatelessWidget {
                     KTextUtils(
                         text:
                             controller.patientInfoModel.value!.displayName.toString(),
-                        size: 22,
-                        color: darkGrey,
+                        size: 20,
+                        color: black,
                         fontWeight: FontWeight.w600,
                         textDecoration: TextDecoration.none),
                   ],
