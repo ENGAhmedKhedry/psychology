@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:psychology/utils/size_config.dart';
-import 'package:psychology/view/screens/doctor_screens/doctor_complete_profile/doctor_education.dart';
-import 'package:psychology/view/screens/doctor_screens/doctor_complete_profile/doctor_experience.dart';
+import 'package:psychology/view/screens/doctor_screens/doctor_complete_profile/doctor_education_screen.dart';
+import 'package:psychology/view/screens/doctor_screens/doctor_complete_profile/doctor_experience_screen.dart';
 
 import '../../../../utils/constants.dart';
 import '../../../../utils/styles.dart';

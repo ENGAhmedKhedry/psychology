@@ -42,7 +42,7 @@ import '../../../utils/my_string.dart';
 import '../../widgets/patient_screens_widgets/doctor_profile_view_for_patient_widgets/circule_image_avatar.dart';
 import '../patient_screens/patient_update_profile.dart';
 import 'doctor_complete_profile/dialog.dart';
-import 'doctor_complete_profile/doctor_experience.dart';
+import 'doctor_complete_profile/doctor_experience_screen.dart';
 
 class DoctorProfileScreen extends StatelessWidget {
   DoctorProfileScreen({Key? key}) : super(key: key);
