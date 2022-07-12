@@ -7,7 +7,6 @@ import '../../../utils/constants.dart';
 
 class Search extends StatelessWidget {
   Search({Key? key}) : super(key: key);
-  TextEditingController search = TextEditingController();
   final controller = Get.put(PatientHomeScreenController());
 
   @override
@@ -20,8 +19,8 @@ class Search extends StatelessWidget {
           style: TextStyle(fontSize: 25),
         ),
       ),
-      body: GetBuilder(
-        builder: (PatientHomeScreenController controller) {
+      body: Obx(
+        () {
           return SafeArea(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -32,13 +31,15 @@ class Search extends StatelessWidget {
                     child: Center(
                       child: TextFormField(
                         onChanged: (value) {
-                          controller.addSearchToList(search.text,search);
+                          controller.addSearchToList(value);
                         },
-                        controller: search,
+                        controller: controller.search,
                         decoration: InputDecoration(
                             suffixIcon: IconButton(
                               onPressed: () {
-                                controller.addSearchToList(search.text,search);
+                                controller.addSearchToList(
+                                  controller.search.text,
+                                );
                                 //////////////
                               },
                               icon: Icon(
@@ -53,15 +54,15 @@ class Search extends StatelessWidget {
                             ),
                             disabledBorder: OutlineInputBorder(
                                 borderSide:
-                                BorderSide(color: mainColor2, width: 2),
+                                    BorderSide(color: mainColor2, width: 2),
                                 borderRadius: BorderRadius.circular(25)),
                             focusedBorder: OutlineInputBorder(
                                 borderSide:
-                                BorderSide(color: mainColor2, width: 2),
+                                    BorderSide(color: mainColor2, width: 2),
                                 borderRadius: BorderRadius.circular(25)),
                             enabledBorder: OutlineInputBorder(
                                 borderSide:
-                                BorderSide(color: mainColor2, width: 2),
+                                    BorderSide(color: mainColor2, width: 2),
                                 borderRadius: BorderRadius.circular(25))),
                         validator: (value) {
                           if (value!.isEmpty) {
@@ -76,19 +77,28 @@ class Search extends StatelessWidget {
                     ),
                   ),
                   Expanded(
-                      child: controller.searchList.isNotEmpty ? ListView
-                          .builder(
-                        itemCount: controller.searchList.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return DoctorCard(name: controller.searchList[index].displayName!,
-                              description: controller.searchList[index].bio!,
-                              imageUrl: controller.searchList[index].profileUrl!,
-                              uid: controller.searchList[index].uid!,
-                              doctorInfo: controller.searchList[index]);
-                        },
-                      ) : Center(
-                        child: Text("enter doctor name to search",style: TextStyle(fontSize: 20),),
-                      )),
+                      child: //controller.searchList.isNotEmpty ||
+                              controller.isSearching.value == true
+                          ? ListView.builder(
+                              itemCount: controller.searchList.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                return DoctorCard(
+                                    name: controller
+                                        .searchList[index].displayName!,
+                                    description:
+                                        controller.searchList[index].bio!,
+                                    imageUrl: controller
+                                        .searchList[index].profileUrl!,
+                                    uid: controller.searchList[index].uid!,
+                                    doctorInfo: controller.searchList[index]);
+                              },
+                            )
+                          : Center(
+                              child: Text(
+                                "enter doctor name to search",
+                                style: TextStyle(fontSize: 20),
+                              ),
+                            )),
                   //دا شرط ال ليست ينجم ///////
 
                   // ConditionalBuilder(

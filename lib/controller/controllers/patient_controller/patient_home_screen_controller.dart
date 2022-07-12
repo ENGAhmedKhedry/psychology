@@ -271,13 +271,18 @@ class PatientHomeScreenController extends GetxController {
 
   /// search doctors by name
   RxList searchList = [].obs;
+  RxBool isSearching = false.obs;
+  TextEditingController search = TextEditingController();
 
   void addSearchToList(
-      String searchName, TextEditingController textEditingController) {
-    if (textEditingController.text=="") {
+      String searchName,) {
+    if (search.text.isEmpty ) {
+      isSearching.value = false;
       searchList.clear();
-      update();
-    }
+
+    } else {
+      isSearching.value = true;
+    }update();
     searchName = searchName.toLowerCase();
     // searchList.value = productList.where((search) {
     //   var searchTitle = search.title.toLowerCase();
@@ -294,7 +299,6 @@ class PatientHomeScreenController extends GetxController {
 
     update();
   }
-
 
 // void clearSearch() {
 //   searchTextController.clear();
