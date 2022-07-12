@@ -7,6 +7,7 @@ class UserModel {
   String? phoneNumber;
   String? gender;
   String? identityFile;
+  String? bio;
   Timestamp? registerDate;
   bool? isDoctor;
   String? uid;
@@ -20,7 +21,7 @@ class UserModel {
       this.phoneNumber,
       this.gender,
       this.isDoctor,
-      this.identityFile,
+      this.identityFile,this.bio,
       this.registerDate,
       this.token);
 
@@ -33,8 +34,9 @@ class UserModel {
       map['phoneNumber'],
       map['gender'],
       map['isDoctor'],
+
       map['identityFile'],
-      map['registerDate'],
+      map['bio'],   map['registerDate'],
       map['token'],
     );
   }

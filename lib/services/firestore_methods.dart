@@ -23,6 +23,7 @@ class FireStoreMethods {
       "registerDate": DateTime.now(),
       "isDoctor": false,
       "identityFile": "null",
+      "bio":"null",
       "token": token
     });
     return;
@@ -38,6 +39,8 @@ class FireStoreMethods {
       "identityFile": identityFile,
       "phoneNumber": phoneNumber,
       "gender": gender,
+      "bio":"null",
+
       "isDoctor": isDoctor,
       "registerDate": DateTime.now(),
       "token": token

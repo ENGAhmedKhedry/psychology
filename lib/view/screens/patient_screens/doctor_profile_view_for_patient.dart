@@ -137,6 +137,19 @@ class DoctorProfileViewForPatient extends StatelessWidget {
                                 color: black,
                                 fontWeight: FontWeight.w800,
                                 textDecoration: TextDecoration.none),
+                            HeightSizeBox(Get.width * .01),
+                            Container(
+                              alignment: Alignment.center,
+                              margin: EdgeInsets.symmetric(horizontal: 12),
+                              child: Text(
+                                doctorInfo.bio!,
+                                style: TextStyle(
+                                  fontSize: 11,
+                                  color: grey,
+                                  fontWeight: FontWeight.w500,
+                                ),textAlign: TextAlign.center,
+                              ),
+                            ),
                             HeightSizeBox(Get.height * .004),
                             ReviewsAndSissions(),
                             HeightSizeBox(Get.height * .015),

@@ -61,7 +61,7 @@ class PopularDoctorsListView extends StatelessWidget {
                           return HomeScreenDoctorContainerBocking(
                             imageUrl: controller.doctorsList[index].profileUrl,
                             name: controller.doctorsList[index].displayName,
-                            description: controller.doctorsList[index].email,
+                            description: controller.doctorsList[index].bio,
                             uid: controller.doctorsList[index].uid,
                             doctorInfo: controller.doctorsList[index],
                           );

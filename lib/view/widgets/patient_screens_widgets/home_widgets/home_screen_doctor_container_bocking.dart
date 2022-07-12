@@ -57,10 +57,10 @@ class HomeScreenDoctorContainerBocking extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
-                  height: 5,
+                  height: 15,
                 ),
-                Container(
-                  height: SizeConfig.defaultSize! * 2,
+                Container(margin: EdgeInsets.symmetric(vertical: 5),
+                  //height: SizeConfig.defaultSize! * 2,
                   width: SizeConfig.defaultSize! * 6.8,
                   child: Text(
                     "Dr. $name",
@@ -72,32 +72,21 @@ class HomeScreenDoctorContainerBocking extends StatelessWidget {
                     softWrap: true,
                   ),
                 ),
-                SizedBox(
-                  height: 2,
-                ),
+
                 SizedBox(
                   width: SizeConfig.defaultSize! * 6.8,
                   child: Text(
-                    description +
-                        description +
-                        description +
-                        description +
-                        description +
-                        description +
-                        description +
-                        description +
-                        description +
-                        description,
+                    description ,
                     style: const TextStyle(
                       fontSize: 10,
-                      color: grey,
-                      fontWeight: FontWeight.w600,
-                      overflow: TextOverflow.ellipsis,
+                        color: grey,
+                        fontWeight: FontWeight.w600,
+                        overflow: TextOverflow.ellipsis,
                     ),
-                    maxLines: 3,
+                    maxLines: 4,
                   ),
                 ),
-                Spacer(),
+        /*        Spacer(),
                 SizedBox(
                   width: SizeConfig.defaultSize! * 4.5,
                   child: Row(
@@ -116,7 +105,7 @@ class HomeScreenDoctorContainerBocking extends StatelessWidget {
                   height: SizeConfig.defaultSize,
                 ),
 
-              ],
+             */ ],
             )
           ],
         ),
