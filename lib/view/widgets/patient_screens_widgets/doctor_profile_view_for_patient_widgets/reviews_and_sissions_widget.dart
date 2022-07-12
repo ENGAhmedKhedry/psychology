@@ -34,7 +34,7 @@ class ReviewsAndSissions extends StatelessWidget {
                 Icon(Icons.star_purple500_sharp,
                     color: Colors.orangeAccent,size: SizeConfig.defaultSize!*1.5,),
                 KTextUtils(
-                    text: "4.5",
+                    text: "0.0",
                     size: SizeConfig.defaultSize! * .8,
                     color: black,
                     fontWeight: FontWeight.w500,
@@ -46,7 +46,7 @@ class ReviewsAndSissions extends StatelessWidget {
               children: [
                 Icon(Icons.play_arrow_rounded, color: mainColor,size: SizeConfig.defaultSize!*1.5,),
                 KTextUtils(
-                    text: "+1000",
+                    text: "+0",
                     size: SizeConfig.defaultSize! * .8,
                     color: black,
                     fontWeight: FontWeight.w500,

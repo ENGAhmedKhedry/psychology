@@ -15,19 +15,30 @@ import 'package:psychology/view/widgets/patient_screens_widgets/doctor_profile_v
 import 'package:psychology/view/widgets/utils_widgets/height_size_box.dart';
 import 'package:psychology/view/widgets/utils_widgets/text_utils.dart';
 
+import '../../../model/doctor_education_model.dart';
+import '../../../model/doctor_exp_model.dart';
+
 class PatientHomeScreenController extends GetxController {
   RxList doctorsList = [].obs;
+  RxList doctorExperienceList = [].obs;
+  RxList doctorEducationList = [].obs;
   DateTime firstDayDateTime = DateTime(DateTime.now().year,
       DateTime.now().month, DateTime.now().day, 00, 00, 00);
   List<DateTime> daysDateList = [];
   RxList moreDoctorsList = [].obs;
   final patientInfoModel = Rxn<UserModel>();
+
   RxBool isDeleting = false.obs;
   RxBool isGettingAppointments = false.obs;
   RxList blogsList = [].obs;
   RxList blogsIdList = [].obs;
   var appointmentsList = <AppointmentModel>[].obs;
-  List<Widget> tabScreens = [FirstTapBarWidget(), TabBarReviewsWidget()];
+  List<Widget> tabScreens = [
+    FirstTapBarWidget(
+      doctorId: '',
+    ),
+    TabBarReviewsWidget()
+  ];
   List<Color> colorList = [
     Color(0xffFFD93D),
     mainColor2,
@@ -190,13 +201,16 @@ class PatientHomeScreenController extends GetxController {
                   width: Get.width * .5,
                   child: Lottie.asset(
                     "assets/animations/88860-success-animation.json",
-                     fit: BoxFit.cover,repeat: false,
+                    fit: BoxFit.cover,
+                    repeat: false,
                   )),
               HeightSizeBox(8),
               KTextUtils(
-                  text:!isTaken? "Appointment canceled":"Appointment Booked Successfully",
+                  text: !isTaken
+                      ? "Appointment canceled"
+                      : "Appointment Booked Successfully",
                   size: 18,
-                  color:!isTaken?Color(0xffe9b5b3): mainColor,
+                  color: !isTaken ? Color(0xffe9b5b3) : mainColor,
                   fontWeight: FontWeight.bold,
                   textDecoration: TextDecoration.none)
             ],
@@ -212,5 +226,44 @@ class PatientHomeScreenController extends GetxController {
     for (int i = 0; i < 7; i++) {
       daysDateList.add(firstDayDateTime.add(Duration(days: i)));
     }
+  }
+/// //////////////////////////////////////////////
+  bool isLoading = false;
+  getDoctorInfo({
+    required String doctorId,
+    required String doctorInfoField,
+  }) async {
+    isLoading = true;
+    update();
+    await FireStoreMethods()
+        .doctors
+        .doc(doctorId)
+        .collection(doctorInfoField)
+        .get()
+        .then((value) {
+      if (value.docs.isNotEmpty) {
+        if (doctorInfoField == experienceCollectionKey) {
+          doctorExperienceList.clear();
+          for (int i = 0; i < value.docs.length; i++) {
+            doctorExperienceList
+                .add(DoctorExperienceModel.fromJson(value.docs[i]));
+          }
+          isLoading = false;
+          update();
+        } else if (doctorInfoField == educationCollectionKey) {
+          doctorEducationList.clear();
+          for (int i = 0; i < value.docs.length; i++) {
+            doctorEducationList
+                .add(DoctorEducationModel.fromJson(value.docs[i]));
+          }
+          isLoading = false;
+          update();
+        }
+      }
+    }).catchError((onError) {
+      Get.snackbar("error", "$onError");
+      isLoading = false;
+      update();
+    });
   }
 }

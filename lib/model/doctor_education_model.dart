@@ -21,7 +21,7 @@ class DoctorEducationModel {
         university: json["university"],
         startDate: json["start_date"],
         endDate: json["end_date"],
-        speciality: 'speciality',
+        speciality: json['speciality'],
       );
 
   Map<String, dynamic> toJson(DoctorEducationModel doctorEducationModel) {

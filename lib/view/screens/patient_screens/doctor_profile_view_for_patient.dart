@@ -15,6 +15,7 @@ import 'package:psychology/view/widgets/utils_widgets/height_size_box.dart';
 import 'package:psychology/view/widgets/utils_widgets/text_utils.dart';
 
 import '../../../controller/controllers/patient_controller/patient_home_screen_controller.dart';
+import '../../widgets/patient_screens_widgets/doctor_profile_view_for_patient_widgets/first_tap_bar_column.dart';
 
 class DoctorProfileViewForPatient extends StatelessWidget {
   DoctorProfileViewForPatient({Key? key}) : super(key: key);
@@ -22,7 +23,7 @@ class DoctorProfileViewForPatient extends StatelessWidget {
   String imageUrl = Get.arguments[1];
   String name = Get.arguments[2];
   String description = Get.arguments[3];
-  UserModel doctorInfo   = Get.arguments[4];
+  UserModel doctorInfo = Get.arguments[4];
   final controller = Get.find<PatientHomeScreenController>();
 
   @override
@@ -138,8 +139,8 @@ class DoctorProfileViewForPatient extends StatelessWidget {
                                 textDecoration: TextDecoration.none),
                             HeightSizeBox(Get.height * .004),
                             ReviewsAndSissions(),
-                            HeightSizeBox(Get.height * .005),
-                            Tabs()
+                            HeightSizeBox(Get.height * .015),
+                            //     Tabs()
                           ],
                         ),
                       ),
@@ -149,7 +150,10 @@ class DoctorProfileViewForPatient extends StatelessWidget {
               },
               body: GetBuilder<PatientHomeScreenController>(
                 builder: (_) {
-                  return TabBarView(children: controller.tabScreens);
+                  return FirstTapBarWidget(
+                    doctorId: doctorInfo.uid!,
+                  );
+                  // TabBarView(children: controller.tabScreens);
                 },
               ),
             ),
@@ -161,7 +165,7 @@ class DoctorProfileViewForPatient extends StatelessWidget {
               controller.getDoctorAppointments(doctorId: uid).then((value) {
                 controller.addDaysList();
                 if (controller.appointmentsList.isNotEmpty) {
-                  Get.toNamed(Routes.bookingDetailsScreen,arguments: [uid]);
+                  Get.toNamed(Routes.bookingDetailsScreen, arguments: [uid]);
                 } else {
                   Get.snackbar("no appointments",
                       "there's no appointment exists for this doctor",
