@@ -227,8 +227,10 @@ class PatientHomeScreenController extends GetxController {
       daysDateList.add(firstDayDateTime.add(Duration(days: i)));
     }
   }
-/// //////////////////////////////////////////////
+
+  /// //////////////////////////////////////////////
   bool isLoading = false;
+
   getDoctorInfo({
     required String doctorId,
     required String doctorInfoField,
@@ -266,4 +268,36 @@ class PatientHomeScreenController extends GetxController {
       update();
     });
   }
+
+  /// search doctors by name
+  RxList searchList = [].obs;
+
+  void addSearchToList(
+      String searchName, TextEditingController textEditingController) {
+    if (textEditingController.text=="") {
+      searchList.clear();
+      update();
+    }
+    searchName = searchName.toLowerCase();
+    // searchList.value = productList.where((search) {
+    //   var searchTitle = search.title.toLowerCase();
+    //   var searchPrice = search.price.toString().toLowerCase();
+    //
+    //   return searchTitle.contains(searchName) ||
+    //       searchPrice.toString().contains(searchName);
+    // }).toList();
+
+    searchList.value = doctorsList.value.where((search) {
+      return search.displayName!.toLowerCase().contains(searchName);
+    }).toList();
+    print(searchList.value[0].displayName);
+
+    update();
+  }
+
+
+// void clearSearch() {
+//   searchTextController.clear();
+//   addSearchToList("");
+// }
 }

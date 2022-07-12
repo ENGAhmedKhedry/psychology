@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:psychology/view/widgets/patient_screens_widgets/home_widgets/doctor_card.dart';
 
+import '../../../controller/controllers/patient_controller/patient_home_screen_controller.dart';
 import '../../../utils/constants.dart';
 
 class Search extends StatelessWidget {
-  const Search({Key? key}) : super(key: key);
+  Search({Key? key}) : super(key: key);
+  TextEditingController search = TextEditingController();
+  final controller = Get.put(PatientHomeScreenController());
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController search = TextEditingController();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: mainColor2,
@@ -16,77 +20,95 @@ class Search extends StatelessWidget {
           style: TextStyle(fontSize: 25),
         ),
       ),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          child: Column(
-            children: [
-              SizedBox(
-                height: 100,
-                child: Center(
-                  child: TextFormField(
-                    onChanged: (value) {
-                      ////////////////////////////////////////
-                    },
-                    controller: search,
-                    decoration: InputDecoration(
-                        suffixIcon: IconButton(
-                          onPressed: () {
-                            //////////////
-                          },
-                          icon: Icon(
-                            Icons.search,
-                            color: Colors.black,
-                          ),
-                        ),
-                        hintText: "Search ...",
-                        hintStyle: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                        ),
-                        disabledBorder: OutlineInputBorder(
-                            borderSide:
+      body: GetBuilder(
+        builder: (PatientHomeScreenController controller) {
+          return SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 100,
+                    child: Center(
+                      child: TextFormField(
+                        onChanged: (value) {
+                          controller.addSearchToList(search.text,search);
+                        },
+                        controller: search,
+                        decoration: InputDecoration(
+                            suffixIcon: IconButton(
+                              onPressed: () {
+                                controller.addSearchToList(search.text,search);
+                                //////////////
+                              },
+                              icon: Icon(
+                                Icons.search,
+                                color: Colors.black,
+                              ),
+                            ),
+                            hintText: "Search ...",
+                            hintStyle: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w400,
+                            ),
+                            disabledBorder: OutlineInputBorder(
+                                borderSide:
                                 BorderSide(color: mainColor2, width: 2),
-                            borderRadius: BorderRadius.circular(25)),
-                        focusedBorder: OutlineInputBorder(
-                            borderSide:
+                                borderRadius: BorderRadius.circular(25)),
+                            focusedBorder: OutlineInputBorder(
+                                borderSide:
                                 BorderSide(color: mainColor2, width: 2),
-                            borderRadius: BorderRadius.circular(25)),
-                        enabledBorder: OutlineInputBorder(
-                            borderSide:
+                                borderRadius: BorderRadius.circular(25)),
+                            enabledBorder: OutlineInputBorder(
+                                borderSide:
                                 BorderSide(color: mainColor2, width: 2),
-                            borderRadius: BorderRadius.circular(25))),
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'search must not be null';
-                      }
-                      return null;
-                    },
-                    onFieldSubmitted: (val) {
-                      ////////////////////////
-                    },
+                                borderRadius: BorderRadius.circular(25))),
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'search must not be null';
+                          }
+                          return null;
+                        },
+                        onFieldSubmitted: (val) {
+                          ////////////////////////
+                        },
+                      ),
+                    ),
                   ),
-                ),
+                  Expanded(
+                      child: controller.searchList.isNotEmpty ? ListView
+                          .builder(
+                        itemCount: controller.searchList.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return DoctorCard(name: controller.searchList[index].displayName!,
+                              description: controller.searchList[index].bio!,
+                              imageUrl: controller.searchList[index].profileUrl!,
+                              uid: controller.searchList[index].uid!,
+                              doctorInfo: controller.searchList[index]);
+                        },
+                      ) : Center(
+                        child: Text("enter doctor name to search",style: TextStyle(fontSize: 20),),
+                      )),
+                  //دا شرط ال ليست ينجم ///////
+
+                  // ConditionalBuilder(
+                  //   condition: state is! GetAllSearchUserLoadingState,
+                  //   builder: (context) => Expanded(
+                  //     child: ListView.separated(
+                  //         itemBuilder: (context, index) =>
+                  //             ChatItem(context, bloc.usersSearch[index]),
+                  //         separatorBuilder: (context, index) => SizedBox(),
+                  //         itemCount: bloc.usersSearch.length),
+                  //   ),
+                  //   fallback: (context) =>search.text==''?SizedBox() :LinearProgressIndicator(
+                  //     color: social3,
+                  //   ),
+                  // )
+                ],
               ),
-
-              //دا شرط ال ليست ينجم ///////
-
-              // ConditionalBuilder(
-              //   condition: state is! GetAllSearchUserLoadingState,
-              //   builder: (context) => Expanded(
-              //     child: ListView.separated(
-              //         itemBuilder: (context, index) =>
-              //             ChatItem(context, bloc.usersSearch[index]),
-              //         separatorBuilder: (context, index) => SizedBox(),
-              //         itemCount: bloc.usersSearch.length),
-              //   ),
-              //   fallback: (context) =>search.text==''?SizedBox() :LinearProgressIndicator(
-              //     color: social3,
-              //   ),
-              // )
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       ),
     );
   }
