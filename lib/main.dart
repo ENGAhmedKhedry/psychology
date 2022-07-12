@@ -70,7 +70,7 @@ class MyApp extends StatelessWidget {
     ]);
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'psychology',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
