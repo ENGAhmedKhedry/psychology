@@ -29,7 +29,7 @@ class DoctorCard extends StatelessWidget {
       child: Card(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         elevation: 4,
-        child: Row(
+        child: Row(mainAxisAlignment: MainAxisAlignment.start,
           children: [
             InkWell( onTap: () {
               Get.toNamed(Routes.doctorProfileViewForPatient,
@@ -59,13 +59,13 @@ class DoctorCard extends StatelessWidget {
             SizedBox(
               width: SizeConfig.defaultSize! * .3,
             ),
-            Column(
+            Column(crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
                   height: 5,
                 ),
                 SizedBox(
-                  width: SizeConfig.defaultSize! * 8,
+                  width: Get.width*.5,
                   child: KTextUtils(
                       text:"Dr. "+ name,
                       size: 18,
@@ -79,15 +79,7 @@ class DoctorCard extends StatelessWidget {
                 SizedBox(
                   width: SizeConfig.defaultSize! * 8,
                   child: Text(
-                    description +
-                        description +
-                        description +
-                        description +
-                        description +
-                        description +
-                        description +
-                        description +
-                        description,
+                    description  ,
                     style: TextStyle(
                       fontSize: 10,
                       color: grey,
@@ -100,20 +92,20 @@ class DoctorCard extends StatelessWidget {
                 SizedBox(
                   height: SizeConfig.defaultSize! * .5,
                 ),
-                SizedBox(
-                  width: SizeConfig.defaultSize! * 8,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      buildIcon(),
-                      buildIcon(),
-                      buildIcon(),
-                      buildIcon(),
-                      buildIcon(),
-                    ],
-                  ),
-                ),
+                // SizedBox(
+                //   width: SizeConfig.defaultSize! * 8,
+                //   child: Row(
+                //     mainAxisAlignment: MainAxisAlignment.start,
+                //     crossAxisAlignment: CrossAxisAlignment.start,
+                //     children: [
+                //       buildIcon(),
+                //       buildIcon(),
+                //       buildIcon(),
+                //       buildIcon(),
+                //       buildIcon(),
+                //     ],
+                //   ),
+                // ),
                 SizedBox(
                   height: 5,
                 ),

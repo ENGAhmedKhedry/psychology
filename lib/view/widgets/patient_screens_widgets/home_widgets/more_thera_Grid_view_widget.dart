@@ -50,7 +50,7 @@ class MoreTherapistsGridViewWidget extends StatelessWidget {
                           return DoctorCard(
                             imageUrl: controller.doctorsList[index].profileUrl,
                             name: controller.doctorsList[index].displayName,
-                            description: controller.doctorsList[index].email,
+                            description: controller.doctorsList[index].bio,
                             uid: controller.doctorsList[index].uid,
                             doctorInfo: controller.doctorsList[index],
                           );
