@@ -70,7 +70,7 @@ class AuthTextFromField extends StatelessWidget {
             ),
             borderRadius: BorderRadius.circular(10),
           ),
-          errorStyle: TextStyle(fontWeight: FontWeight.bold)
+          errorStyle: TextStyle(fontWeight: FontWeight.bold),
       ),
     );
   }
