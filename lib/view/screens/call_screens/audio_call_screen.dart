@@ -232,7 +232,19 @@ class _AudioCallScreenState extends State<AudioCallScreen> {
           case false:
             // snapshot is null which means that call is hanged and documents are deleted
             Navigator.pop(context);
-
+            Get.defaultDialog(
+                onConfirm: () {
+                  // Get.to()
+                },
+                title: "Make Diagnosis",
+                textConfirm: "yes",
+                middleText:
+                "Add the diagnosis and medication to the patient's condition",
+                confirmTextColor: Colors.white,
+                textCancel: "no",
+                buttonColor: mainColor2,
+                cancelTextColor: mainColor2,
+                backgroundColor: white);
             break;
 
           default:

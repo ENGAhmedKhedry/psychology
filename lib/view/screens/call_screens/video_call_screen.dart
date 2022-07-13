@@ -13,7 +13,6 @@ import 'package:psychology/utils/my_string.dart';
 import 'package:psychology/view/widgets/patient_screens_widgets/doctor_profile_view_for_patient_widgets/circule_image_avatar.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 
-
 class VideoCallScreen extends StatefulWidget {
   final Call call;
 
@@ -101,7 +100,6 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
           _infoStrings.add(info);
           users.remove(uid);
           CallMethods().endCall(call: callController.comingCall.value!);
-
         });
       }, firstRemoteVideoFrame: (uid, width, height, elapsed) {
         setState(() {
@@ -166,26 +164,26 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
             },
             child: Icon(
               muted ? Icons.mic_off : Icons.mic,
-              color: muted ?  white : mainColor2,
+              color: muted ? white : mainColor2,
               size: 20.0,
             ),
             // Icon
             shape: const CircleBorder(),
             elevation: 2.0,
-            fillColor: muted ? mainColor2 :  white,
+            fillColor: muted ? mainColor2 : white,
             padding: const EdgeInsets.all(12.0),
           ),
           RawMaterialButton(
-            onPressed: ()async {
-           await   CallMethods()
+            onPressed: () async {
+              await CallMethods()
                   .endCall(call: callController.comingCall.value!)
-                  .then((value)  {
-               Navigator.pop(context);
+                  .then((value) {
+                Navigator.pop(context);
               });
             },
             child: const Icon(
               Icons.call_end,
-              color:  white,
+              color: white,
               size: 35.0,
             ),
             // Icon
@@ -225,7 +223,19 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
           case false:
             // snapshot is null which means that call is hanged and documents are deleted
             Navigator.pop(context);
-
+            Get.defaultDialog(
+                onConfirm: () {
+                 // Get.to()
+                },
+                title: "Make Diagnosis",
+                textConfirm: "yes",
+                middleText:
+                    "Add the diagnosis and medication to the patient's condition",
+                confirmTextColor: Colors.white,
+                textCancel: "no",
+                buttonColor: mainColor2,
+                cancelTextColor: mainColor2,
+                backgroundColor: white);
             break;
 
           default:
@@ -265,7 +275,7 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
                         color: homeBackGroundColor,
                         imageUrl: widget.call.receiverPic,
                         width: Get.width * .3,
-                       ),
+                      ),
                       SizedBox(
                         height: Get.height * .01,
                       ),
