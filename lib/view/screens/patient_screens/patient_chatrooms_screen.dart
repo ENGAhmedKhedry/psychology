@@ -14,7 +14,6 @@ class PatientChatScreen extends StatelessWidget {
     return AnswerCallWrapLayout(
       scaffold: Scaffold(
           backgroundColor: homeBackGroundColor,
-
           //   appBar: AppBar(  elevation: 2,
           // backgroundColor: mainColor2,
           // title: KTextUtils(

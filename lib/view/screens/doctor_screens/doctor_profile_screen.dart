@@ -155,14 +155,18 @@ class DoctorProfileScreen extends StatelessWidget {
                 return buildTextButtonIcon(
                     onPressed: () {
                       Get.defaultDialog(
+                        onConfirm: (){
+                          authController.signOutFromApp();
+
+                        },
                           onCancel: () {
-                            authController.signOutFromApp();
+                          Get.back();
                           },
                           title: "Logout",
-                          textConfirm: "No",
+                          textConfirm: "Yes",
                           middleText: "Are you sure to Logout...!",
                           confirmTextColor: Colors.white,
-                          textCancel: "Yes",
+                          textCancel: "No",
                           buttonColor: mainColor2,
                           cancelTextColor: mainColor2,
                           backgroundColor: white);
