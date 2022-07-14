@@ -13,6 +13,8 @@ import 'package:psychology/utils/my_string.dart';
 import 'package:psychology/view/widgets/patient_screens_widgets/doctor_profile_view_for_patient_widgets/circule_image_avatar.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 
+import '../make_diagnosis/make_diagnosis_screen.dart';
+
 class VideoCallScreen extends StatefulWidget {
   final Call call;
 
@@ -224,8 +226,12 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
             // snapshot is null which means that call is hanged and documents are deleted
             Navigator.pop(context);
             Get.defaultDialog(
+
                 onConfirm: () {
-                 // Get.to()
+                  Get.to(MakeDiagnosis());
+                },
+                onCancel: (){
+                  Get.back();
                 },
                 title: "Make Diagnosis",
                 textConfirm: "yes",
