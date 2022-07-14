@@ -10,8 +10,8 @@ import 'package:psychology/view/widgets/utils_widgets/text_utils.dart';
 import '../call_screens/answer_call/answer_call_wrap_layout.dart';
 
 class MakeDiagnosis extends StatelessWidget {
-  TextEditingController addBlogTextController = TextEditingController();
-  TextEditingController addBlogTitleTextController = TextEditingController();
+  TextEditingController diseaseNameController = TextEditingController();
+  TextEditingController diagnosisController = TextEditingController();
   // final doctorHomeController = Get.find<DoctorHomeController>();
   // UserModel userModel = Get.arguments[0];
 
@@ -27,13 +27,13 @@ class MakeDiagnosis extends StatelessWidget {
               builder: (DoctorHomeController doctorHomeController) {
                 return TextButton(
                     onPressed: () {
-                      if (addBlogTitleTextController.text.isEmpty) {
+                      if (diseaseNameController.text.isEmpty) {
                         Fluttertoast.showToast(
                           gravity: ToastGravity.TOP,
                           msg: "enter the the disease name",
                           backgroundColor: Colors.red,
                         );
-                      } else if (addBlogTextController.text.isEmpty) {
+                      } else if (diagnosisController.text.isEmpty) {
                         Fluttertoast.showToast(
                           gravity: ToastGravity.TOP,
                           msg: "enter the diagnosis",
@@ -49,8 +49,8 @@ class MakeDiagnosis extends StatelessWidget {
                       // }
                       else {
                         doctorHomeController.uploadingNewBlog(
-                            addBlogTextController.text,
-                            addBlogTitleTextController.text);
+                            diagnosisController.text,
+                            diseaseNameController.text);
                       }
                     },
                     child: Text(
@@ -77,15 +77,15 @@ class MakeDiagnosis extends StatelessWidget {
             SizedBox(
               height: 20,
             ),
-            GetBuilder(
-              builder: (DoctorHomeController doctorHomeController) {
-                return doctorHomeController.isLoading.value
-                    ? LinearProgressIndicator(
-                  color: mainColor2,
-                )
-                    : SizedBox();
-              },
-            ),
+            // GetBuilder(
+            //   builder: (DoctorHomeController doctorHomeController) {
+            //     return doctorHomeController.isLoading.value
+            //         ? LinearProgressIndicator(
+            //       color: mainColor2,
+            //     )
+            //         : SizedBox();
+            //   },
+            // ),
             Expanded(
               child: SingleChildScrollView(
                 physics: BouncingScrollPhysics(),
@@ -146,7 +146,7 @@ class MakeDiagnosis extends StatelessWidget {
                           height: Get.height * .06,
                           margin: EdgeInsets.symmetric(horizontal: 5),
                           child: TextField(
-                            controller: addBlogTitleTextController,
+                            controller: diseaseNameController,
                             keyboardType: TextInputType.text,
                             maxLines: 1,
                             style: TextStyle(
@@ -198,7 +198,7 @@ class MakeDiagnosis extends StatelessWidget {
                       Container(
                           margin: EdgeInsets.symmetric(horizontal: 20),
                           child: TextField(
-                            controller: addBlogTextController,
+                            controller: diagnosisController,
                             keyboardType: TextInputType.multiline,
                             maxLines: null,
                             style: TextStyle(
@@ -217,64 +217,64 @@ class MakeDiagnosis extends StatelessWidget {
                             cursorHeight: 20,
                             cursorRadius: Radius.circular(20),
                           )),
-                      GetBuilder(
-                          builder: (DoctorHomeController doctorHomeController) {
-                            return doctorHomeController.blogImage != null
-                                ? Stack(
-                              alignment: AlignmentDirectional.topEnd,
-                              children: [
-                                Align(
-                                  alignment: AlignmentDirectional.bottomCenter,
-                                  child: Container(
-                                    width: double.infinity,
-                                    decoration: BoxDecoration(
-                                      color: Theme.of(context)
-                                          .scaffoldBackgroundColor,
-                                      borderRadius: BorderRadius.circular(10),
-                                      boxShadow: [
-                                        BoxShadow(
-                                            color: Colors.grey.withOpacity(0.4),
-                                            blurRadius: 9,
-                                            spreadRadius: 4,
-                                            offset: Offset(0, 4))
-                                      ],
-                                    ),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(10),
-                                      child: Image(
-                                          image: FileImage(
-                                              doctorHomeController.blogImage!),
-                                          fit: BoxFit.contain),
-                                    ),
-                                  ),
-                                ),
-                                IconButton(
-                                    onPressed: () {
-                                      doctorHomeController.clearImage();
-                                    },
-                                    icon: Container(
-                                      decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          boxShadow: [
-                                            BoxShadow(
-                                                color: Colors.grey
-                                                    .withOpacity(0.4),
-                                                blurRadius: 9,
-                                                spreadRadius: 4,
-                                                offset: Offset(0, 4))
-                                          ]),
-                                      child: CircleAvatar(
-                                          backgroundColor: Theme.of(context)
-                                              .scaffoldBackgroundColor,
-                                          child: const Icon(
-                                            Icons.close_rounded,
-                                            color: mainColor2,
-                                          )),
-                                    ))
-                              ],
-                            )
-                                : const SizedBox();
-                          }),
+                      // GetBuilder(
+                      //     builder: (DoctorHomeController doctorHomeController) {
+                      //       return doctorHomeController.blogImage != null
+                      //           ? Stack(
+                      //         alignment: AlignmentDirectional.topEnd,
+                      //         children: [
+                      //           Align(
+                      //             alignment: AlignmentDirectional.bottomCenter,
+                      //             child: Container(
+                      //               width: double.infinity,
+                      //               decoration: BoxDecoration(
+                      //                 color: Theme.of(context)
+                      //                     .scaffoldBackgroundColor,
+                      //                 borderRadius: BorderRadius.circular(10),
+                      //                 boxShadow: [
+                      //                   BoxShadow(
+                      //                       color: Colors.grey.withOpacity(0.4),
+                      //                       blurRadius: 9,
+                      //                       spreadRadius: 4,
+                      //                       offset: Offset(0, 4))
+                      //                 ],
+                      //               ),
+                      //               child: ClipRRect(
+                      //                 borderRadius: BorderRadius.circular(10),
+                      //                 child: Image(
+                      //                     image: FileImage(
+                      //                         doctorHomeController.blogImage!),
+                      //                     fit: BoxFit.contain),
+                      //               ),
+                      //             ),
+                      //           ),
+                      //           IconButton(
+                      //               onPressed: () {
+                      //                 doctorHomeController.clearImage();
+                      //               },
+                      //               icon: Container(
+                      //                 decoration: BoxDecoration(
+                      //                     shape: BoxShape.circle,
+                      //                     boxShadow: [
+                      //                       BoxShadow(
+                      //                           color: Colors.grey
+                      //                               .withOpacity(0.4),
+                      //                           blurRadius: 9,
+                      //                           spreadRadius: 4,
+                      //                           offset: Offset(0, 4))
+                      //                     ]),
+                      //                 child: CircleAvatar(
+                      //                     backgroundColor: Theme.of(context)
+                      //                         .scaffoldBackgroundColor,
+                      //                     child: const Icon(
+                      //                       Icons.close_rounded,
+                      //                       color: mainColor2,
+                      //                     )),
+                      //               ))
+                      //         ],
+                      //       )
+                      //           : const SizedBox();
+                      //     }),
                       SizedBox(
                         height: Get.height * .1,
                       ),

@@ -4,6 +4,7 @@ import 'package:psychology/controller/controllers/auth_controller.dart';
 import 'package:psychology/controller/controllers/patient_controller/patient_home_screen_controller.dart';
 import 'package:psychology/utils/constants.dart';
 import 'package:psychology/utils/size_config.dart';
+import 'package:psychology/view/screens/patient_screens/diagnosis_screen.dart';
 import 'package:psychology/view/screens/patient_screens/patient_update_profile.dart';
 import 'package:psychology/view/widgets/utils_widgets/height_size_box.dart';
 import 'package:psychology/view/widgets/utils_widgets/text_utils.dart';
@@ -81,6 +82,17 @@ class PatientProfileScreen extends StatelessWidget {
                   style: TextStyle(fontSize: 20, color: Colors.black),
                 );
               },
+            ),
+            const SizedBox(height: 20),
+            buildTextButtonIcon(
+              backColor: mainColor,
+              onPressed: () {
+                Get.to(DiagnosisScreen());
+              },
+              icon: Icons.medical_services_outlined,
+              iconColor: Colors.white,
+              label: '  View Your Diagnosis   ',
+              style: TextStyle(fontSize: 20, color: Colors.black),
             ),
             const SizedBox(height: 20),
             buildTextButtonIcon(
