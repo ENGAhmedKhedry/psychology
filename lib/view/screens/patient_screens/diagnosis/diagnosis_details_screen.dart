@@ -3,12 +3,12 @@ import 'package:get/get.dart';
 import 'package:psychology/utils/constants.dart';
 import 'package:psychology/utils/styles.dart';
 
-import '../../../utils/size_config.dart';
-import '../../widgets/utils_widgets/height_size_box.dart';
-import '../../widgets/utils_widgets/text_utils.dart';
+import '../../../../utils/size_config.dart';
+import '../../../widgets/utils_widgets/height_size_box.dart';
+import '../../../widgets/utils_widgets/text_utils.dart';
 
-class DiagnosisScreen extends StatelessWidget {
-  const DiagnosisScreen({Key? key}) : super(key: key);
+class DiagnosisDetailsScreenScreen extends StatelessWidget {
+  const DiagnosisDetailsScreenScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,7 @@ class DiagnosisScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: mainColor2,
         centerTitle: true,
-        title: Text("Your Diagnosis"),
+        title: Text("Diagnosis Details"),
         leading: IconButton(
             onPressed: () {
               Get.back();
