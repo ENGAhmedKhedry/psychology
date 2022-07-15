@@ -36,7 +36,7 @@ class DiagnosisModel {
    return edMap;
   }
 
-  factory DiagnosisModel.fromMap(Map<String, dynamic> map) {
+  factory DiagnosisModel.fromMap(  map) {
     return DiagnosisModel(
       patientName: map['patientName'] as String,
       patientId: map['patientId'] as String,

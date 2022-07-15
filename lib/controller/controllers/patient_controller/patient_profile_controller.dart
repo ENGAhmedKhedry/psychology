@@ -5,10 +5,15 @@ import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:psychology/services/firestore_methods.dart';
+
+import '../../../model/diagnosis_model.dart';
 
 class PatientProfileController extends GetxController {
   bool isLoading = false;
+  RxList patientDiagnosis = [].obs;
 
   firebase_storage.FirebaseStorage storage =
       firebase_storage.FirebaseStorage.instance;
@@ -16,6 +21,7 @@ class PatientProfileController extends GetxController {
   //////////////////////////////
   final ImagePicker picker = ImagePicker();
   File? profileImageFile;
+  GetStorage authBox = GetStorage();
 
   getImage() async {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
@@ -34,8 +40,13 @@ class PatientProfileController extends GetxController {
   }
 
   ///////////////////////////
+  onInit() async {
+    getMyDiagnosis();
 
-  updateUserInfo(Map<String, Object> map, uid, collectionKey,context) {
+    super.onInit();
+  }
+
+  updateUserInfo(Map<String, Object> map, uid, collectionKey, context) {
     isLoading = true;
     update();
     return FirebaseFirestore.instance
@@ -53,7 +64,6 @@ class PatientProfileController extends GetxController {
       update();
 //       Get.offAll(() => PatientMainScreen());
       Navigator.pop(context);
-
     }).catchError((error) {
       isLoading = false;
       update();
@@ -67,13 +77,7 @@ class PatientProfileController extends GetxController {
   }
 
   Future updateUserImageStorage(
-    uid,
-    imageUrl,
-    name,
-    phoneNumber,
-    email,
-    collectionKey,context
-  ) async {
+      uid, imageUrl, name, phoneNumber, email, collectionKey, context) async {
     isLoading = true;
     update();
     if (profileImageFile != null) {
@@ -89,7 +93,7 @@ class PatientProfileController extends GetxController {
             'email': email,
             "profileUrl": value,
             "phoneNumber": phoneNumber,
-          }, uid, collectionKey,context);
+          }, uid, collectionKey, context);
           Get.snackbar(
             "Uploaded ✔✔",
             "Uploaded to firestorage successfully",
@@ -116,7 +120,22 @@ class PatientProfileController extends GetxController {
         'email': email,
         "profileUrl": imageUrl,
         "phoneNumber": phoneNumber,
-      }, uid, collectionKey,context);
+      }, uid, collectionKey, context);
     }
+  }
+
+  getMyDiagnosis() {
+    FireStoreMethods()
+        .patients
+        .doc(authBox.read("uid"))
+        .collection("diagnosis")
+        .snapshots()
+        .listen((event) {
+      patientDiagnosis.clear();
+      for (int i = 0; i < event.docs.length; i++) {
+        patientDiagnosis.add(DiagnosisModel.fromMap(event.docs[i]));
+      }
+      update();
+    });
   }
 }

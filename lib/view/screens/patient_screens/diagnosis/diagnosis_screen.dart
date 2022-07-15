@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../controller/controllers/patient_controller/patient_profile_controller.dart';
+import '../../../../model/diagnosis_model.dart';
 import '../../../../utils/constants.dart';
 import '../../../../utils/styles.dart';
 
 class DiagnosisScreen extends StatelessWidget {
-  const DiagnosisScreen({Key? key}) : super(key: key);
+  DiagnosisScreen({Key? key}) : super(key: key);
+  final controller = Get.put(PatientProfileController());
 
   @override
   Widget build(BuildContext context) {
@@ -21,26 +24,31 @@ class DiagnosisScreen extends StatelessWidget {
             },
             icon: Icon(IconBroken.Arrow___Left_2)),
       ),
-      body: CustomScrollView(
-        slivers: [
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (BuildContext context, int index) {
-                return buildPostItem(
-                  context,
-                  index,
-                );
-              },
-              childCount: 3,
-            ),
-          ),
-        ],
+      body: Container(
+        child: GetBuilder(initState: controller.getMyDiagnosis(),
+          builder: (PatientProfileController controller) {
+            return controller.patientDiagnosis.length != 0
+                ? ListView.builder(
+                    itemCount: controller.patientDiagnosis.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return buildPostItem(
+                        controller.patientDiagnosis[index],
+                        context,
+                        index,
+                      );
+                    },
+                  )
+                : Center(
+                    child: Text("you have no Diagnosis"),
+                  );
+          },
+        ),
       ),
     );
   }
 
   Widget buildPostItem(
-    // PostModel model,
+    DiagnosisModel diagnosisModel,
     BuildContext context,
     int index,
     //int commentsNum,
@@ -56,32 +64,12 @@ class DiagnosisScreen extends StatelessWidget {
             children: [
               /////صورة واسم اليوزر
               GestureDetector(
-                onTap: () {
-                  // if (SocialAppCubit.get(context).postsList[index].uId ==
-                  //     uId) {
-                  //   SocialAppCubit.get(context).changeBottomNavBarIndex(4);
-                  //   //   MyNavigators.navigateTo(context, SettingsScreen());
-                  // } else if (SocialAppCubit.get(context)
-                  //     .postsList[index]
-                  //     .uId !=
-                  //     uId) {
-                  //   SocialAppCubit.get(context).getFriendData(
-                  //       SocialAppCubit.get(context).postsList[index].uId);
-                  //   MyNavigators.navigateTo(
-                  //       context,
-                  //       FriendProfile(
-                  //         friendId: SocialAppCubit.get(context)
-                  //             .postsList[index]
-                  //             .uId,
-                  //       ));
-                  // }
-                },
+                onTap: () {},
                 child: Row(
                   children: [
                     CircleAvatar(
                       radius: 25,
-                      backgroundImage: NetworkImage(
-                          'https://img.freepik.com/free-vector/doctor-character-background_1270-84.jpg?w=2000'),
+                      backgroundImage: NetworkImage(diagnosisModel.doctorImage),
                     ),
                     const SizedBox(width: 20),
                     Expanded(
@@ -91,7 +79,7 @@ class DiagnosisScreen extends StatelessWidget {
                           Row(
                             children: [
                               Text(
-                                'Dr ibrahim atef',
+                                'Dr ${diagnosisModel.doctorName}',
                                 style: Theme.of(context)
                                     .textTheme
                                     .headline6!
@@ -133,12 +121,9 @@ class DiagnosisScreen extends StatelessWidget {
               ////نص البوست//
               // if (model.text != '')
               Text(
-                'you r insane and incurable you r insane and incurable you r insane and incurable you r insane and incurable',
-                style: Theme.of(context)
-                    .textTheme
-                    .subtitle1!
-                    .copyWith(fontWeight: FontWeight.w500, fontSize: 14,height: 1.5),
-
+                diagnosisModel.diagnosis,
+                style: Theme.of(context).textTheme.subtitle1!.copyWith(
+                    fontWeight: FontWeight.w500, fontSize: 14, height: 1.5),
               ),
             ],
           ),
