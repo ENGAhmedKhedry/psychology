@@ -13,6 +13,7 @@ const String blogsCollectionKey = "blogs";
 const String chatRoomsCollectionKey = "chatRooms";
 const String appointmentsCollectionKey = "appointments";
 const String educationCollectionKey = "education";
+const String diagnosisCollectionKey = "diagnosis";
 const String experienceCollectionKey = "experience";
 const theSource = AudioSource.microphone;
 const String fcmBaseUrl = "https://fcm.googleapis.com/fcm/send";

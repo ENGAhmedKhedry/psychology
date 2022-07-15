@@ -54,7 +54,7 @@ class DoctorChatScreen extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                     textDecoration: TextDecoration.none),
               ),
-              SliverToBoxAdapter(child: SearchWidget()),
+         //     SliverToBoxAdapter(child: SearchWidget()),
 
               // SliverToBoxAdapter(
               //   child: Container(

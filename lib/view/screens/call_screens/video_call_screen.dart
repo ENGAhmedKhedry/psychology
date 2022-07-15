@@ -5,13 +5,13 @@ import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:psychology/controller/controllers/call_controller.dart';
 import 'package:psychology/model/call_model.dart';
 import 'package:psychology/services/call_methods.dart';
 import 'package:psychology/utils/constants.dart';
 import 'package:psychology/utils/my_string.dart';
 import 'package:psychology/view/widgets/patient_screens_widgets/doctor_profile_view_for_patient_widgets/circule_image_avatar.dart';
-import 'package:stop_watch_timer/stop_watch_timer.dart';
 
 import '../make_diagnosis/make_diagnosis_screen.dart';
 
@@ -214,6 +214,8 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
     );
   }
 
+  String isDoctor = GetStorage().read("auth") ?? "";
+
   addPostFrameCallback() {
     SchedulerBinding.instance!.addPostFrameCallback((_) {
       callStreamSubscription = callController.callCollection
@@ -225,23 +227,28 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
           case false:
             // snapshot is null which means that call is hanged and documents are deleted
             Navigator.pop(context);
-            Get.defaultDialog(
-
-                onConfirm: () {
-                  Get.to(MakeDiagnosis());
-                },
-                onCancel: (){
-                  Get.back();
-                },
-                title: "Make Diagnosis",
-                textConfirm: "yes",
-                middleText:
-                    "Add the diagnosis and medication to the patient's condition",
-                confirmTextColor: Colors.white,
-                textCancel: "no",
-                buttonColor: mainColor2,
-                cancelTextColor: mainColor2,
-                backgroundColor: white);
+            // if (isDoctor == doctorsCollectionKey) {
+            //   Get.defaultDialog(
+            //       onConfirm: () {
+            //         Navigator.push(
+            //             context,
+            //             MaterialPageRoute(
+            //                 builder: (context) => MakeDiagnosis(call: widget.call,)));
+            //        // Get.to(MakeDiagnosis());
+            //       },
+            //       // onCancel: () {
+            //       //   Get.back();
+            //       // },
+            //       title: "Make Diagnosis",
+            //       textConfirm: "yes",
+            //       middleText:
+            //           "Add the diagnosis and medication to the patient's condition",
+            //       confirmTextColor: Colors.white,
+            //       textCancel: "no",
+            //       buttonColor: mainColor2,
+            //       cancelTextColor: mainColor2,
+            //       backgroundColor: white);
+            // }
             break;
 
           default:

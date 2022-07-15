@@ -2,16 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:lottie/lottie.dart';
 import 'package:psychology/controller/controllers/messages_controller.dart';
+import 'package:psychology/model/diagnosis_model.dart';
 import 'package:psychology/model/patint_info_model.dart';
 import 'package:psychology/services/fcm_api_handler.dart';
 import 'package:psychology/services/permission_services.dart';
 import 'package:psychology/services/call_services.dart';
 import 'package:psychology/utils/constants.dart';
 import 'package:psychology/view/screens/call_screens/answer_call/answer_call_wrap_layout.dart';
+import 'package:psychology/view/screens/make_diagnosis/make_diagnosis_screen.dart';
 import 'package:psychology/view/widgets/patient_screens_widgets/chat_widget/chat_buble.dart';
- import '../../../../utils/styles.dart';
+import '../../../../utils/styles.dart';
+import '../../../utils/my_string.dart';
 
 class ChatScreen extends StatelessWidget {
   UserModel friendData = Get.arguments[0];
@@ -21,6 +25,7 @@ class ChatScreen extends StatelessWidget {
   UserModel myData = Get.arguments[3];
 
   final messagesController = Get.find<MessagesController>();
+  String isDoctor = GetStorage().read("auth") ?? "";
 
   TextEditingController messageTextController = TextEditingController();
 
@@ -30,17 +35,42 @@ class ChatScreen extends StatelessWidget {
       scaffold: Scaffold(
         backgroundColor: homeBackGroundColor,
         appBar: AppBar(
-          actions:  [
+          actions: [
+            isDoctor == doctorsCollectionKey
+                ? IconButton(
+                    padding: EdgeInsets.zero,
+                    onPressed: () async {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => MakeDiagnosis(
+                                    diagnosisModel: DiagnosisModel(
+                                        patientName: friendData.displayName!,
+                                        patientId: friendData.uid!,
+                                        patientImage: friendData.profileUrl!,
+                                        doctorId: myData.uid!,
+                                        doctorName: myData.displayName!,
+                                        doctorImage: myData.profileUrl!,
+                                        diseaseName: "",
+                                        diagnosis: "",
+                                        Date: ""),
+                                  )));
+                    },
+                    icon: Icon(
+                      IconBroken.Paper_Plus,
+                      color: Colors.black,
+                    ))
+                : SizedBox(),
             IconButton(
                 padding: EdgeInsets.zero,
                 onPressed: () async {
                   await Permissions.cameraAndMicrophonePermissionsGranted()
                       ? CallUtils.dial(
-                    from: myData,
-                    to: friendData,
-                    context: context,
-                    isAudioCall: true,
-                  )
+                          from: myData,
+                          to: friendData,
+                          context: context,
+                          isAudioCall: true,
+                        )
                       : {};
                 },
                 icon: Icon(
@@ -52,11 +82,11 @@ class ChatScreen extends StatelessWidget {
                 onPressed: () async {
                   await Permissions.cameraAndMicrophonePermissionsGranted()
                       ? CallUtils.dial(
-                    from: myData,
-                    to: friendData,
-                    context: context,
-                    isAudioCall: false,
-                  )
+                          from: myData,
+                          to: friendData,
+                          context: context,
+                          isAudioCall: false,
+                        )
                       : {};
                 },
                 icon: Icon(
@@ -100,23 +130,23 @@ class ChatScreen extends StatelessWidget {
               ),
               (friendData.displayName.toString()).contains(" ") == false
                   ? Text(
-                "${(friendData.displayName.toString())}",
-                //  "${friendData.displayName}",
-                style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 20,
-                    color: black),
-              )
+                      "${(friendData.displayName.toString())}",
+                      //  "${friendData.displayName}",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 20,
+                          color: black),
+                    )
                   : Text(
-                "${(friendData.displayName.toString()).substring(
-                  0,
-                  (friendData.displayName.toString()).indexOf(" "),
-                )}", //  "${friendData.displayName}",
-                style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 20,
-                    color: black),
-              ),
+                      "${(friendData.displayName.toString()).substring(
+                        0,
+                        (friendData.displayName.toString()).indexOf(" "),
+                      )}", //  "${friendData.displayName}",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 20,
+                          color: black),
+                    ),
             ],
           ),
         ),
@@ -125,81 +155,81 @@ class ChatScreen extends StatelessWidget {
             children: [
               Expanded(
                   child: GetX(
-                    initState: messagesController.getMessages(chatRoomId),
-                    init: MessagesController(),
-                    builder: (MessagesController messagesController) {
-                      return ListView.builder(
-                          reverse: true,
-                          physics: BouncingScrollPhysics(),
-                          itemCount: messagesController.messagesList.length,
-                          itemBuilder: (context, index) {
-                            bool isAudio = messagesController
+                initState: messagesController.getMessages(chatRoomId),
+                init: MessagesController(),
+                builder: (MessagesController messagesController) {
+                  return ListView.builder(
+                      reverse: true,
+                      physics: BouncingScrollPhysics(),
+                      itemCount: messagesController.messagesList.length,
+                      itemBuilder: (context, index) {
+                        bool isAudio = messagesController
                                 .messagesList[index].message
                                 .contains("audio%2")
-                                ? true
-                                : false;
-                            bool isMe =
+                            ? true
+                            : false;
+                        bool isMe =
                             messagesController.messagesList[index].senderId ==
-                                myUid
+                                    myUid
                                 ? true
                                 : false;
-                            bool isImage = messagesController
+                        bool isImage = messagesController
                                 .messagesList[index].message
                                 .toString()
                                 .contains("image%2")
-                                ? true
-                                : false;
-                            bool isVideo = messagesController
+                            ? true
+                            : false;
+                        bool isVideo = messagesController
                                 .messagesList[index].message
                                 .contains("video%2")
-                                ? true
-                                : false;
+                            ? true
+                            : false;
 
-                            return GestureDetector(
-                              onLongPress: () {
-                                if (messagesController
+                        return GestureDetector(
+                          onLongPress: () {
+                            if (messagesController
                                     .messagesList[index].senderId ==
-                                    myUid) {
-                                  Get.defaultDialog(
-                                      title: "Delete !!",
-                                      confirmTextColor: Colors.white,
-                                      content: Text(""),
-                                      onCancel: () {},
-                                      onConfirm: () async {
-                                        await messagesController.deleteMessage(
-                                            chatRoomId,
-                                            {
-                                              "lastMessage": " ",
-                                              "lastMessageSenderUid":
+                                myUid) {
+                              Get.defaultDialog(
+                                  title: "Delete !!",
+                                  confirmTextColor: Colors.white,
+                                  content: Text(""),
+                                  onCancel: () {},
+                                  onConfirm: () async {
+                                    await messagesController.deleteMessage(
+                                        chatRoomId,
+                                        {
+                                          "lastMessage": " ",
+                                          "lastMessageSenderUid":
                                               messagesController
                                                   .messagesList[index].senderId
-                                            },
-                                            messagesController
-                                                .messagesList[index].messageId);
-                                        Get.back();
-                                      },
-                                      textCancel: "Cancel",
-                                      textConfirm: "Delete");
-                                }
-                              },
-                              child: ChatBuble(
-                                isMe: isMe,
-                                isVideo: isVideo,
-                                isImage: isImage,
-                                isAudio: isAudio,
-                                message:
+                                        },
+                                        messagesController
+                                            .messagesList[index].messageId);
+                                    Get.back();
+                                  },
+                                  textCancel: "Cancel",
+                                  textConfirm: "Delete");
+                            }
+                          },
+                          child: ChatBuble(
+                            isMe: isMe,
+                            isVideo: isVideo,
+                            isImage: isImage,
+                            isAudio: isAudio,
+                            message:
                                 messagesController.messagesList[index].message,
-                              ),
-                            );
-                          });
-                    },
-                  )),
+                          ),
+                        );
+                      });
+                },
+              )),
               Obx(() {
                 return messagesController.isSending.value
                     ? Container(
-                  child: LinearProgressIndicator(
-                      color: mainColor2, minHeight: 2),
-                )
+                        child: LinearProgressIndicator(
+                            color: mainColor2, minHeight: 2),
+                      )
                     : SizedBox();
               }),
               Container(
@@ -216,7 +246,7 @@ class ChatScreen extends StatelessWidget {
                 ),
                 height: Get.height * .07,
                 child: Obx(
-                      () {
+                  () {
                     return Row(
                       children: [
                         Expanded(
@@ -231,191 +261,191 @@ class ChatScreen extends StatelessWidget {
                                     )),
                                 child: messagesController.recorder.isRecording
                                     ? Container(
-                                    alignment: Alignment.bottomCenter,
-                                    margin:
-                                    EdgeInsets.symmetric(vertical: 10),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                      crossAxisAlignment:
-                                      CrossAxisAlignment.center,
-                                      children: [
-                                        IconButton(
-                                            padding: EdgeInsets.zero,
-                                            onPressed: () {
-                                              messagesController
-                                                  .deleteRecord();
-                                            },
-                                            icon: Icon(IconBroken.Delete)),
-                                        StreamBuilder<RecordingDisposition>(
-                                          stream: messagesController
-                                              .recorder.onProgress,
-                                          builder: (context, snapshot) {
-                                            final duration = snapshot
-                                                .hasData
-                                                ? snapshot.data!.duration
-                                                : Duration.zero;
+                                        alignment: Alignment.bottomCenter,
+                                        margin:
+                                            EdgeInsets.symmetric(vertical: 10),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            IconButton(
+                                                padding: EdgeInsets.zero,
+                                                onPressed: () {
+                                                  messagesController
+                                                      .deleteRecord();
+                                                },
+                                                icon: Icon(IconBroken.Delete)),
+                                            StreamBuilder<RecordingDisposition>(
+                                              stream: messagesController
+                                                  .recorder.onProgress,
+                                              builder: (context, snapshot) {
+                                                final duration = snapshot
+                                                        .hasData
+                                                    ? snapshot.data!.duration
+                                                    : Duration.zero;
 
-                                            String twoDigits(int n) => n
-                                                .toString()
-                                                .padLeft(2, "0");
-                                            final twoDigitMinutes =
-                                            twoDigits(duration.inMinutes
-                                                .remainder(60));
-                                            final twoDigitSeconds =
-                                            twoDigits(duration.inSeconds
-                                                .remainder(60));
+                                                String twoDigits(int n) => n
+                                                    .toString()
+                                                    .padLeft(2, "0");
+                                                final twoDigitMinutes =
+                                                    twoDigits(duration.inMinutes
+                                                        .remainder(60));
+                                                final twoDigitSeconds =
+                                                    twoDigits(duration.inSeconds
+                                                        .remainder(60));
 
-                                            return Text(
-                                              "$twoDigitMinutes:$twoDigitSeconds",
-                                              style:
-                                              TextStyle(fontSize: 25),
-                                            );
-                                          },
-                                        ),
-                                        // IconButton(
-                                        //     padding: EdgeInsets.zero,
-                                        //     onPressed: () {messagesController.stopRecording();},
-                                        //     icon: Icon(
-                                        //       Icons.stop_rounded,
-                                        //       size: Get.width * .085,
-                                        //     ))
-                                      ],
-                                    ))
-                                    : TextField(
-                                  onChanged: (value) {
-                                    messagesController
-                                        .isWritingFun(value);
-                                  },
-                                  controller: messageTextController,
-                                  cursorColor: Color(0xFF000000),
-                                  keyboardType: TextInputType.text,
-                                  decoration: InputDecoration(
-                                      suffixIcon: Transform.rotate(
-                                          angle: 1,
-                                          child: IconButton(
-                                            onPressed: () {
-                                              Get.defaultDialog(
-                                                  title: "Pick !!",
-                                                  confirmTextColor:
-                                                  Colors.white,
-                                                  content: Text(""),
-                                                  onCancel: () async {
-                                                    await messagesController
-                                                        .getImage(
-                                                      chatRoomId,
-                                                      true,
-                                                      myData.uid,
-                                                      myData.displayName,
-                                                    )
-                                                        .then(
-                                                            (value) async {
-                                                          FcmHandler.sendMessageNotification(
-                                                              friendData
-                                                                  .token!,
-                                                              "Image",
-                                                              myData
-                                                                  .displayName,
-                                                              myData
-                                                                  .profileUrl);
-                                                        }).catchError(
-                                                            (onError) {
-                                                          debugPrint(
-                                                              "lllllllllllllll$onError");
-                                                        });
-                                                  },
-                                                  onConfirm: () async {
-                                                    await messagesController
-                                                        .getVideo(
-                                                      chatRoomId,
-                                                      true,
-                                                      myData.uid,
-                                                      myData.displayName,
-                                                    )
-                                                        .then((value) {
-                                                      FcmHandler.sendMessageNotification(
-                                                          friendData
-                                                              .token!,
-                                                          "Video",
-                                                          myData
-                                                              .displayName,
-                                                          myData
-                                                              .profileUrl);
-                                                    });
-                                                  },
-                                                  textCancel: "Image",
-                                                  textConfirm: "Video");
-                                            },
-                                            icon: Icon(
-                                              Icons.attach_file_rounded,
-                                              size: 29,
+                                                return Text(
+                                                  "$twoDigitMinutes:$twoDigitSeconds",
+                                                  style:
+                                                      TextStyle(fontSize: 25),
+                                                );
+                                              },
                                             ),
-                                          )),
-                                      hintText: "type a message..",
-                                      border: InputBorder.none),
-                                ))),
+                                            // IconButton(
+                                            //     padding: EdgeInsets.zero,
+                                            //     onPressed: () {messagesController.stopRecording();},
+                                            //     icon: Icon(
+                                            //       Icons.stop_rounded,
+                                            //       size: Get.width * .085,
+                                            //     ))
+                                          ],
+                                        ))
+                                    : TextField(
+                                        onChanged: (value) {
+                                          messagesController
+                                              .isWritingFun(value);
+                                        },
+                                        controller: messageTextController,
+                                        cursorColor: Color(0xFF000000),
+                                        keyboardType: TextInputType.text,
+                                        decoration: InputDecoration(
+                                            suffixIcon: Transform.rotate(
+                                                angle: 1,
+                                                child: IconButton(
+                                                  onPressed: () {
+                                                    Get.defaultDialog(
+                                                        title: "Pick !!",
+                                                        confirmTextColor:
+                                                            Colors.white,
+                                                        content: Text(""),
+                                                        onCancel: () async {
+                                                          await messagesController
+                                                              .getImage(
+                                                            chatRoomId,
+                                                            true,
+                                                            myData.uid,
+                                                            myData.displayName,
+                                                          )
+                                                              .then(
+                                                                  (value) async {
+                                                            FcmHandler.sendMessageNotification(
+                                                                friendData
+                                                                    .token!,
+                                                                "Image",
+                                                                myData
+                                                                    .displayName,
+                                                                myData
+                                                                    .profileUrl);
+                                                          }).catchError(
+                                                                  (onError) {
+                                                            debugPrint(
+                                                                "lllllllllllllll$onError");
+                                                          });
+                                                        },
+                                                        onConfirm: () async {
+                                                          await messagesController
+                                                              .getVideo(
+                                                            chatRoomId,
+                                                            true,
+                                                            myData.uid,
+                                                            myData.displayName,
+                                                          )
+                                                              .then((value) {
+                                                            FcmHandler.sendMessageNotification(
+                                                                friendData
+                                                                    .token!,
+                                                                "Video",
+                                                                myData
+                                                                    .displayName,
+                                                                myData
+                                                                    .profileUrl);
+                                                          });
+                                                        },
+                                                        textCancel: "Image",
+                                                        textConfirm: "Video");
+                                                  },
+                                                  icon: Icon(
+                                                    Icons.attach_file_rounded,
+                                                    size: 29,
+                                                  ),
+                                                )),
+                                            hintText: "type a message..",
+                                            border: InputBorder.none),
+                                      ))),
                         !messagesController.isWriting.value
                             ? messagesController.isRecording.value
-                            ? IconButton(
-                            onPressed: () async {
-                              await messagesController.initRecorder();
-                              messagesController
-                                  .sendRecord(
-                                chatRoomId,
-                                true,
-                                myData.uid,
-                                myData.displayName,
-                              )
-                                  .then((value) {
-                                FcmHandler.sendMessageNotification(
-                                    friendData.token!,
-                                    "voice Record",
-                                    myData.displayName,
-                                    myData.profileUrl);
-                              });
-                            },
-                            icon: Icon(
-                              IconBroken.Send,
-                              color: Colors.blue,
-                              size: 30,
-                            ))
-                            : InkWell(
-                          onTap: () {
-                            //  messagesController.record();
-                          },
-                          child: IconButton(
-                              onPressed: () async {
-                                await messagesController
-                                    .initRecorder();
-                                messagesController
-                                    .record()
-                                    .then((value) {});
-                              },
-                              icon: Icon(
-                                IconBroken.Voice,
-                                color: Colors.blue,
-                                size: 30,
-                              )),
-                        )
+                                ? IconButton(
+                                    onPressed: () async {
+                                      await messagesController.initRecorder();
+                                      messagesController
+                                          .sendRecord(
+                                        chatRoomId,
+                                        true,
+                                        myData.uid,
+                                        myData.displayName,
+                                      )
+                                          .then((value) {
+                                        FcmHandler.sendMessageNotification(
+                                            friendData.token!,
+                                            "voice Record",
+                                            myData.displayName,
+                                            myData.profileUrl);
+                                      });
+                                    },
+                                    icon: Icon(
+                                      IconBroken.Send,
+                                      color: Colors.blue,
+                                      size: 30,
+                                    ))
+                                : InkWell(
+                                    onTap: () {
+                                      //  messagesController.record();
+                                    },
+                                    child: IconButton(
+                                        onPressed: () async {
+                                          await messagesController
+                                              .initRecorder();
+                                          messagesController
+                                              .record()
+                                              .then((value) {});
+                                        },
+                                        icon: Icon(
+                                          IconBroken.Voice,
+                                          color: Colors.blue,
+                                          size: 30,
+                                        )),
+                                  )
                             : Transform.rotate(
-                            angle: 88,
-                            child: IconButton(
-                                onPressed: () async {
-                                  await messagesController.sendMessage(
-                                      messageTextController:
-                                      messageTextController,
-                                      sendClicked: true,
-                                      chatRoomId: chatRoomId,
-                                      senderName: myData.displayName,
-                                      myUserId: myData.uid,
-                                      friendToken: friendData.token!,
-                                      senderImage: myData.profileUrl);
-                                },
-                                icon: Icon(
-                                  IconBroken.Send,
-                                  color: Colors.blue,
-                                  size: 30,
-                                ))),
+                                angle: 88,
+                                child: IconButton(
+                                    onPressed: () async {
+                                      await messagesController.sendMessage(
+                                          messageTextController:
+                                              messageTextController,
+                                          sendClicked: true,
+                                          chatRoomId: chatRoomId,
+                                          senderName: myData.displayName,
+                                          myUserId: myData.uid,
+                                          friendToken: friendData.token!,
+                                          senderImage: myData.profileUrl);
+                                    },
+                                    icon: Icon(
+                                      IconBroken.Send,
+                                      color: Colors.blue,
+                                      size: 30,
+                                    ))),
                       ],
                     );
                   },

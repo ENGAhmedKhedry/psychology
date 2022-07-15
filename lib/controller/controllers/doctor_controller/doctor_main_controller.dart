@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -11,6 +12,7 @@ import 'package:psychology/view/screens/doctor_screens/doctor_home_screen.dart';
 import 'package:psychology/view/screens/doctor_screens/doctor_profile_screen.dart';
 import 'package:psychology/view/screens/patient_screens/blogs_screen.dart';
 
+import '../../../model/diagnosis_model.dart';
 import '../../../model/doctor_education_model.dart';
 import '../../../model/doctor_exp_model.dart';
 
@@ -142,5 +144,42 @@ class MainDoctorController extends GetxController {
     educationEndDate = dateTime;
 
     update();
+  }
+
+  bool isDLoading = false;
+
+  addDiagnosis({required DiagnosisModel diagnosisModel}) async {
+    isDLoading = true;
+    update();
+    await FireStoreMethods()
+        .doctors
+        .doc(diagnosisModel.doctorId)
+        .collection(diagnosisCollectionKey)
+        .doc()
+        .set(diagnosisModel.toMap(diagnosisModel))
+        .then((value) {
+      FireStoreMethods()
+          .patients
+          .doc(diagnosisModel.patientId)
+          .collection(diagnosisCollectionKey)
+          .doc()
+          .set(diagnosisModel.toMap(diagnosisModel))
+          .then((value) {
+        Get.snackbar("Done", "info added Successfully",
+            backgroundColor: Colors.green);
+        isDLoading = false;
+        update();
+      }).catchError((onError) {
+        Get.snackbar("Error", "$onError", backgroundColor: Colors.red);
+        isDLoading = false;
+        update();
+      });
+
+      update();
+    }).catchError((onError) {
+      Get.snackbar("Error", "$onError", backgroundColor: Colors.red);
+      isDLoading = false;
+      update();
+    });
   }
 }
