@@ -71,7 +71,6 @@ class DiagnosisDetailsScreenScreen extends StatelessWidget {
                               child: ClipRRect(
                                   borderRadius: BorderRadius.circular(Get.width * .09),
                                   child:
-                                  //SizedBox()
                                   //////////صورة الدكتور//////////
                                   FadeInImage.assetNetwork(
                                       fit: BoxFit.cover,

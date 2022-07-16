@@ -11,6 +11,7 @@ import 'package:psychology/view/widgets/utils_widgets/text_utils.dart';
 import '../../../utils/my_string.dart';
 import '../../widgets/patient_screens_widgets/doctor_profile_view_for_patient_widgets/circule_image_avatar.dart';
 import 'diagnosis/diagnosis_screen.dart';
+import 'package:share_plus/share_plus.dart';
 
 class PatientProfileScreen extends StatelessWidget {
   PatientProfileScreen({Key? key}) : super(key: key);
@@ -98,10 +99,13 @@ class PatientProfileScreen extends StatelessWidget {
             const SizedBox(height: 20),
             buildTextButtonIcon(
               backColor: mainColor,
-              onPressed: () {},
+              onPressed: () async{
+                final urlPreview='https://github.com/ENGAhmedKhedry/psychology';
+              await Share.share('Check Out Our Psychology App\n\n$urlPreview');
+              },
               icon: Icons.messenger_outline_outlined,
               iconColor: Colors.white,
-              label: '  Invite a friend   ',
+              label: '  Share The App   ',
               style: TextStyle(fontSize: 20, color: Colors.black),
             ),
             const SizedBox(height: 20),

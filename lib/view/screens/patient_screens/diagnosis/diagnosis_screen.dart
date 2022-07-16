@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:psychology/view/screens/patient_screens/diagnosis/diagnosis_details_screen.dart';
 
 import '../../../../controller/controllers/patient_controller/patient_profile_controller.dart';
 import '../../../../model/diagnosis_model.dart';
@@ -25,7 +26,8 @@ class DiagnosisScreen extends StatelessWidget {
             icon: Icon(IconBroken.Arrow___Left_2)),
       ),
       body: Container(
-        child: GetBuilder(initState: controller.getMyDiagnosis(),
+        child: GetBuilder(
+          initState: controller.getMyDiagnosis(),
           builder: (PatientProfileController controller) {
             return controller.patientDiagnosis.length != 0
                 ? ListView.builder(
@@ -51,9 +53,12 @@ class DiagnosisScreen extends StatelessWidget {
     DiagnosisModel diagnosisModel,
     BuildContext context,
     int index,
-    //int commentsNum,
   ) {
-    return Card(
+    return GestureDetector(
+      onTap: () {
+        Get.to(DiagnosisDetailsScreenScreen());
+      },
+      child: Card(
         margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
         elevation: 5,
         clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -63,48 +68,37 @@ class DiagnosisScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               /////صورة واسم اليوزر
-              GestureDetector(
-                onTap: () {},
-                child: Row(
-                  children: [
-                    CircleAvatar(
-                      radius: 25,
-                      backgroundImage: NetworkImage(diagnosisModel.doctorImage),
+              Row(
+                children: [
+                  CircleAvatar(
+                    radius: 25,
+                    backgroundImage: NetworkImage(diagnosisModel.doctorImage),
+                  ),
+                  const SizedBox(width: 20),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              'Dr ${diagnosisModel.doctorName}',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline6!
+                                  .copyWith(
+                                      fontSize: 16,
+                                      height: 1.4,
+                                      fontWeight: FontWeight.bold),
+                            ),
+                            SizedBox(width: 5),
+                          ],
+                        ),
+                      ],
                     ),
-                    const SizedBox(width: 20),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              Text(
-                                'Dr ${diagnosisModel.doctorName}',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headline6!
-                                    .copyWith(
-                                        fontSize: 16,
-                                        height: 1.4,
-                                        fontWeight: FontWeight.bold),
-                              ),
-                              SizedBox(width: 5),
-                            ],
-                          ),
-                          /////////////التااااااااااااريخ//////////////
-                          // Text(
-                          //   DateFormat.yMMMd().format(model.date),
-                          //   style: Theme.of(context)
-                          //       .textTheme
-                          //       .caption!
-                          //       .copyWith(height: 1.4),
-                          // ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(width: 15)
-                  ],
-                ),
+                  ),
+                  const SizedBox(width: 15)
+                ],
               ),
               /////Divider////
               Padding(
@@ -127,17 +121,8 @@ class DiagnosisScreen extends StatelessWidget {
               ),
             ],
           ),
-        )
-        // Padding(
-        //   padding: const EdgeInsets.all(8.0),
-        //   child: Container(
-        //     child: Text(
-        //       'Communicate with friends',
-        //       style: TextStyle(color: Colors.black),
-        //     ),
-        //   ),
-        // ),
-
-        );
+        ),
+      ),
+    );
   }
 }
