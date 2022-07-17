@@ -8,6 +8,7 @@ class DiagnosisModel {
   String diseaseName;
   String diagnosis;
   String Date;
+  String treatment;
 
   DiagnosisModel({
     required this.patientName,
@@ -19,6 +20,7 @@ class DiagnosisModel {
     required this.diseaseName,
     required this.diagnosis,
     required this.Date,
+    required this.treatment,
   });
 
   Map<String, dynamic> toMap(DiagnosisModel diagnosisModel) {
@@ -33,6 +35,7 @@ class DiagnosisModel {
       edMap['diseaseName']= diagnosisModel.diseaseName;
       edMap['diagnosis']= diagnosisModel.diagnosis;
       edMap['Date']= diagnosisModel.Date;
+      edMap['treatment']= diagnosisModel.treatment;
    return edMap;
   }
 
@@ -47,6 +50,7 @@ class DiagnosisModel {
       diseaseName: map['diseaseName'] as String,
       diagnosis: map['diagnosis'] as String,
       Date: map['Date'] as String,
+      treatment: map['treatment'] as String,
     );
   }
 }

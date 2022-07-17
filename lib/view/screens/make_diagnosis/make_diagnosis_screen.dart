@@ -1,21 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:psychology/controller/controllers/doctor_controller/doctor_home_controller.dart';
-import 'package:psychology/model/call_model.dart';
 import 'package:psychology/model/diagnosis_model.dart';
 import 'package:psychology/utils/constants.dart';
 import 'package:psychology/utils/styles.dart';
-import 'package:psychology/view/screens/doctor_screens/doctor_main_screen.dart';
 import 'package:psychology/view/widgets/utils_widgets/height_size_box.dart';
 import 'package:psychology/view/widgets/utils_widgets/text_utils.dart';
-
 import '../../../controller/controllers/doctor_controller/doctor_main_controller.dart';
-import '../call_screens/answer_call/answer_call_wrap_layout.dart';
 
 class MakeDiagnosis extends StatelessWidget {
   TextEditingController diseaseNameController = TextEditingController();
   TextEditingController diagnosisController = TextEditingController();
+  TextEditingController treatmentController = TextEditingController();
   DiagnosisModel diagnosisModel;
 
   // final doctorHomeController = Get.find<DoctorHomeController>();
@@ -64,7 +60,14 @@ class MakeDiagnosis extends StatelessWidget {
                           doctorImage: diagnosisModel.doctorImage,
                           diseaseName: diseaseNameController.text,
                           diagnosis: diagnosisController.text,
-                          Date: DateTime.now().toString());
+                          Date: DateTime.now().toString(),
+                          treatment: treatmentController.text);
+                      // diagnosisController.clear();
+                      // diseaseNameController.clear();
+                      // treatmentController.clear();
+                      // Get.back();
+
+
                       doctorHomeController.addDiagnosis(diagnosisModel: dd);
                     }
                   },
@@ -73,7 +76,7 @@ class MakeDiagnosis extends StatelessWidget {
                     style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
-                        color: black),
+                        color: white),
                   ));
             },
           )
@@ -84,13 +87,13 @@ class MakeDiagnosis extends StatelessWidget {
           },
           icon: Icon(
             IconBroken.Arrow___Left_2,
-            color: black,
+            color: white,
           ),
         ),
-        backgroundColor: mainColor4,
+        backgroundColor: mainColor2,
         title: const Text(
           "Create Diagnosis",
-          style: TextStyle(color: black),
+          style: TextStyle(color: white),
         ),
       ),
       body: Column(
@@ -120,8 +123,8 @@ class MakeDiagnosis extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Container(
-                          height: Get.width * .135,
-                          width: Get.width * .135,
+                          height: Get.width * .16,
+                          width: Get.width * .16,
                           decoration: BoxDecoration(
                             // image: DecorationImage(
                             //   image: NetworkImage(
@@ -149,6 +152,7 @@ class MakeDiagnosis extends StatelessWidget {
                             ),
                           ),
                         ),
+                        SizedBox(width: 20),
                         ////////////اسم الدكتور////////
                         KTextUtils(
                             text: diagnosisModel.patientName,
@@ -161,81 +165,112 @@ class MakeDiagnosis extends StatelessWidget {
                     SizedBox(
                       height: 30,
                     ),
-                    Container(
-                        height: Get.height * .06,
-                        margin: EdgeInsets.symmetric(horizontal: 5),
-                        child: TextField(
-                          controller: diseaseNameController,
-                          keyboardType: TextInputType.text,
-                          maxLines: 1,
-                          style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w800,
-                              color: darkGrey),
-                          decoration: InputDecoration(
-                            label: Text(
-                              "The Disease Name",
-                              style: TextStyle(color: Colors.black54),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: darkGrey,
-                              ),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: darkGrey,
-                              ),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            errorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Colors.red,
-                              ),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            focusedErrorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: darkGrey,
-                              ),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            hintText: "write the disease name..",
-                            hintStyle: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black54),
+                    TextField(
+                      controller: diseaseNameController,
+                      keyboardType: TextInputType.text,
+                      maxLines: 1,
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w800,
+                          color: darkGrey),
+                      decoration: InputDecoration(
+                        label: Text(
+                          "The Disease Name",
+                          style: TextStyle(color: Colors.black54),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: darkGrey,
                           ),
-                          cursorColor: Colors.black,
-                          cursorHeight: 20,
-                          cursorRadius: Radius.circular(20),
-                        )),
-                    SizedBox(
-                      height: 15,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: darkGrey,
+                          ),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Colors.red,
+                          ),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        focusedErrorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: darkGrey,
+                          ),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        hintText: "write the disease name..",
+                        hintStyle: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black54),
+                      ),
+                      cursorColor: Colors.black,
+                      cursorHeight: 20,
+                      cursorRadius: Radius.circular(20),
                     ),
-                    Container(
-                        margin: EdgeInsets.symmetric(horizontal: 20),
-                        child: TextField(
-                          controller: diagnosisController,
-                          keyboardType: TextInputType.multiline,
-                          maxLines: null,
-                          style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: darkGrey),
-                          decoration: const InputDecoration(
-                            border: InputBorder.none,
-                            hintText: "write diagnosis..",
-                            hintStyle: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black54),
+                    SizedBox(
+                      height: Get.height * .02,
+                    ),
+                    TextField(
+                      controller: diagnosisController,
+                      keyboardType: TextInputType.multiline,
+                      maxLines: 4,
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: darkGrey),
+                      decoration: InputDecoration(
+                        label: Text(
+                          "write diagnosis",
+                          style: TextStyle(color: Colors.black54),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: darkGrey,
                           ),
-                          cursorColor: Colors.black,
-                          cursorHeight: 20,
-                          cursorRadius: Radius.circular(20),
-                        )),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: darkGrey,
+                          ),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Colors.red,
+                          ),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        focusedErrorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: darkGrey,
+                          ),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        hintText: "write the diagnosis..",
+                        hintStyle: TextStyle(
+                            fontSize: 13,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black54),
+                      ),
+
+                      // decoration: const InputDecoration(
+                      //   border: InputBorder.none,
+                      //   hintText: "write diagnosis..",
+                      //   hintStyle: TextStyle(
+                      //       fontSize: 16,
+                      //       fontWeight: FontWeight.bold,
+                      //       color: Colors.black54),
+                      // ),
+                      cursorColor: Colors.black,
+                      cursorHeight: 20,
+                      cursorRadius: Radius.circular(20),
+                    ),
                     // GetBuilder(
                     //     builder: (DoctorHomeController doctorHomeController) {
                     //       return doctorHomeController.blogImage != null
@@ -295,7 +330,54 @@ class MakeDiagnosis extends StatelessWidget {
                     //           : const SizedBox();
                     //     }),
                     SizedBox(
-                      height: Get.height * .1,
+                      height: Get.height * .02,
+                    ),
+                    TextField(
+                      controller: treatmentController,
+                      keyboardType: TextInputType.text,
+                      maxLines: 1,
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w800,
+                          color: darkGrey),
+                      decoration: InputDecoration(
+                        label: Text(
+                          "Treatment",
+                          style: TextStyle(color: Colors.black54),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: darkGrey,
+                          ),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: darkGrey,
+                          ),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Colors.red,
+                          ),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        focusedErrorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: darkGrey,
+                          ),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        hintText: "write the prescription..",
+                        hintStyle: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black54),
+                      ),
+                      cursorColor: Colors.black,
+                      cursorHeight: 20,
+                      cursorRadius: Radius.circular(20),
                     ),
                   ],
                 ),

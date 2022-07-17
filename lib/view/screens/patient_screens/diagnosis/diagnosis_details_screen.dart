@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:psychology/model/diagnosis_model.dart';
 import 'package:psychology/utils/constants.dart';
 import 'package:psychology/utils/styles.dart';
 
@@ -8,7 +9,8 @@ import '../../../widgets/utils_widgets/height_size_box.dart';
 import '../../../widgets/utils_widgets/text_utils.dart';
 
 class DiagnosisDetailsScreenScreen extends StatelessWidget {
-  const DiagnosisDetailsScreenScreen({Key? key}) : super(key: key);
+  const DiagnosisDetailsScreenScreen({Key? key, required this.diagnosisModel}) : super(key: key);
+  final DiagnosisModel diagnosisModel;
 
   @override
   Widget build(BuildContext context) {
@@ -76,14 +78,14 @@ class DiagnosisDetailsScreenScreen extends StatelessWidget {
                                       fit: BoxFit.cover,
                                       placeholder:
                                       "assets/animations/63065-profile-in-out.gif",
-                                      image: 'https://img.freepik.com/free-vector/doctor-character-background_1270-84.jpg?w=2000'),
+                                      image: diagnosisModel.doctorImage),
                                   ),
                             ),
                           ),
                           SizedBox(width: 20,),
                           ////////////اسم الدكتور////////
                           KTextUtils(
-                              text: 'Dr Ibrahim Atef',
+                              text: diagnosisModel.doctorName,
                               size: 20,
                               color: white,
                               fontWeight: FontWeight.w700,
@@ -106,7 +108,7 @@ class DiagnosisDetailsScreenScreen extends StatelessWidget {
                         ),
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Text ('what the hell is that',
+                          child: Text (diagnosisModel.diseaseName,
                             style:TextStyle(fontSize: 16,height: 1.5) ,),
                         ),
                       ),
@@ -126,7 +128,7 @@ class DiagnosisDetailsScreenScreen extends StatelessWidget {
                         ),
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Text ('aksdgjfaedgjakewdjawdasefaksdgjfaedgjakewdjawdasefaksdgjfaedgjakewdjawdasefaksdgjfaedgjakewdjawdasefaksdgjfaedgjakewdjawdasefaksdgjfaedgjakewdjawdasef',
+                          child: Text (diagnosisModel.diagnosis,
                             style:TextStyle(fontSize: 16,height: 1.5) ,),
                         ),
                       ),
@@ -146,7 +148,7 @@ class DiagnosisDetailsScreenScreen extends StatelessWidget {
                         ),
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Text ('antibiotic',
+                          child: Text (diagnosisModel.treatment,
                             style:TextStyle(fontSize: 16,height: 1.5) ,),
                         ),
                       )

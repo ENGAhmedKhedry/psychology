@@ -53,7 +53,8 @@ class ChatScreen extends StatelessWidget {
                                         doctorImage: myData.profileUrl!,
                                         diseaseName: "",
                                         diagnosis: "",
-                                        Date: ""),
+                                        Date: "",
+                                        treatment: ""),
                                   )));
                     },
                     icon: Icon(

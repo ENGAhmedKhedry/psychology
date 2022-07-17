@@ -56,7 +56,7 @@ class DiagnosisScreen extends StatelessWidget {
   ) {
     return GestureDetector(
       onTap: () {
-        Get.to(DiagnosisDetailsScreenScreen());
+        Get.to(DiagnosisDetailsScreenScreen(diagnosisModel: diagnosisModel,));
       },
       child: Card(
         margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
