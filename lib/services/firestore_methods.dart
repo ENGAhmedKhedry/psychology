@@ -22,7 +22,7 @@ class FireStoreMethods {
       "gender": gender,
       "registerDate": DateTime.now(),
       "isDoctor": false,
-      "identityFile": "null",
+      "identityFile": " ",
       "bio":"null",
       "token": token
     });
