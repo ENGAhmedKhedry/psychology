@@ -65,7 +65,8 @@ class DoctorProfileScreen extends StatelessWidget {
                 if (doctorMainController.myData.value != null) {
                   return Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
+                    children: [                      HeightSizeBox(SizeConfig.defaultSize! * .7),
+
                       CirculeImageAvatar(
                         imageUrl: doctorMainController.myData.value!.profileUrl
                             .toString(),
@@ -74,18 +75,24 @@ class DoctorProfileScreen extends StatelessWidget {
                       HeightSizeBox(SizeConfig.defaultSize! * .7),
                       KTextUtils(
                           text:
-                          "${doctorMainController.myData.value!.displayName}",
+                              "${doctorMainController.myData.value!.displayName}",
                           size: 22,
                           color: darkGrey,
                           fontWeight: FontWeight.w700,
                           textDecoration: TextDecoration.none),
-                      HeightSizeBox(SizeConfig.defaultSize! * .2),
+                      HeightSizeBox(SizeConfig.defaultSize! * .1),
                       KTextUtils(
                           text: "${doctorMainController.myData.value!.email}",
                           size: 15,
                           color: grey,
                           fontWeight: FontWeight.w500,
-                          textDecoration: TextDecoration.none)
+                          textDecoration: TextDecoration.none),
+                      HeightSizeBox(SizeConfig.defaultSize! * .2),
+                      Text("${doctorMainController.myData.value!.bio}",style: TextStyle(
+                        fontSize: 15,
+                        color: grey,
+                      ),textAlign: TextAlign.center,),
+
                     ],
                   );
                 } else {
@@ -108,9 +115,9 @@ class DoctorProfileScreen extends StatelessWidget {
                   onPressed: () {
                     doctorMainController.myData.value != null
                         ? Get.to(() => PatientUpdateProfile(), arguments: [
-                      doctorMainController.myData.value,
-                      doctorsCollectionKey
-                    ])
+                            doctorMainController.myData.value,
+                            doctorsCollectionKey
+                          ])
                         : null;
                   },
                   icon: Icons.edit,
@@ -149,18 +156,17 @@ class DoctorProfileScreen extends StatelessWidget {
               label: '  Help    ',
               style: TextStyle(fontSize: 20, color: Colors.black),
             ),
-            const Spacer(flex: 1),
+            const SizedBox(height: 20),
             GetBuilder<AuthController>(
               builder: (_) {
                 return buildTextButtonIcon(
                     onPressed: () {
                       Get.defaultDialog(
-                        onConfirm: (){
-                          authController.signOutFromApp();
-
-                        },
+                          onConfirm: () {
+                            authController.signOutFromApp();
+                          },
                           onCancel: () {
-                          Get.back();
+                            Get.back();
                           },
                           title: "Logout",
                           textConfirm: "Yes",
@@ -271,4 +277,3 @@ class DoctorProfileScreen extends StatelessWidget {
     );
   }
 }
-

@@ -15,6 +15,7 @@ import '../../widgets/patient_screens_widgets/doctor_profile_view_for_patient_wi
 class PatientUpdateProfile extends StatelessWidget {
   PatientUpdateProfile({Key? key}) : super(key: key);
   final TextEditingController nameController = TextEditingController();
+  final TextEditingController bioController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -144,6 +145,25 @@ class PatientUpdateProfile extends StatelessWidget {
                   ),
                   HeightSizeBox(SizeConfig.defaultSize!),
                   AuthTextFromField(
+                    controller: bioController,
+                    obscureText: false,
+                    validator: (value) {
+                      if (value.length == 0) {
+                        return 'Please enter bio';
+                      } else {
+                        return null;
+                      }
+                    },
+                    hintText: "bio",
+                    textInputType: TextInputType.name,
+                    suffixIcon: Text(""),
+                    prefixIcon: Icon(
+                      Icons.insert_drive_file_outlined,
+                      color: white,
+                    ),
+                  ),
+                  HeightSizeBox(SizeConfig.defaultSize!),
+                  AuthTextFromField(
                     controller: phoneController,
                     obscureText: false,
                     validator: (value) {
@@ -202,6 +222,7 @@ class PatientUpdateProfile extends StatelessWidget {
                                           phoneController.text,
                                           emailController.text,
                                           Get.arguments[1],
+                                          bioController.text,
                                           context)
                                       .then((value) {
                                     cc.updateUserEmail(emailController.text);

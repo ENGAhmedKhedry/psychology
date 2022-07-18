@@ -77,7 +77,7 @@ class PatientProfileController extends GetxController {
   }
 
   Future updateUserImageStorage(
-      uid, imageUrl, name, phoneNumber, email, collectionKey, context) async {
+      uid, imageUrl, name, phoneNumber, email, collectionKey,bio, context) async {
     isLoading = true;
     update();
     if (profileImageFile != null) {
@@ -93,6 +93,7 @@ class PatientProfileController extends GetxController {
             'email': email,
             "profileUrl": value,
             "phoneNumber": phoneNumber,
+            "bio":bio
           }, uid, collectionKey, context);
           Get.snackbar(
             "Uploaded ✔✔",
