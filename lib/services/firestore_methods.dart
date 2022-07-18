@@ -39,7 +39,7 @@ class FireStoreMethods {
       "identityFile": identityFile,
       "phoneNumber": phoneNumber,
       "gender": gender,
-      "bio":"null",
+      "bio":" ",
 
       "isDoctor": isDoctor,
       "registerDate": DateTime.now(),
