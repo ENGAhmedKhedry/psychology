@@ -52,24 +52,24 @@ class AuthTextFromField extends StatelessWidget {
             ),
             borderRadius: BorderRadius.circular(10),
           ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: hentText,
-            ),
-            borderRadius: BorderRadius.circular(10),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: hentText,
           ),
-          errorBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: Colors.red,
-            ),
-            borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Colors.red,
           ),
-          focusedErrorBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: hentText,
-            ),
-            borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: hentText,
           ),
+          borderRadius: BorderRadius.circular(10),
+        ),
           errorStyle: TextStyle(fontWeight: FontWeight.bold),
       ),
     );
